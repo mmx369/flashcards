@@ -1,0 +1,41 @@
+import cors from 'cors'
+import dotenv from 'dotenv'
+import express, { Express, Request, Response } from 'express'
+import errorMiddleware from './middleware/errorMiddleware'
+import authRouter from './routers/index'
+
+dotenv.config()
+
+import cookieParser from 'cookie-parser'
+import mongoose from 'mongoose'
+
+const app: Express = express()
+
+app.use(express.json())
+app.use(
+  cors({
+    credentials: true,
+    origin: process.env.CLIENT_URL,
+  })
+)
+app.use(cookieParser())
+
+app.get('/', (req: Request, res: Response) => {
+  res.send('Hello World From the Server!')
+})
+
+app.use('/api', authRouter)
+app.use(errorMiddleware)
+
+const PORT = process.env.PORT || 8000
+
+async function startApp() {
+  try {
+    await mongoose.connect(process.env.DB_URL as string)
+    app.listen(PORT, () => console.log(`Server running on port ${PORT}`))
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+startApp()
