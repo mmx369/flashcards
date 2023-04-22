@@ -1,11 +1,12 @@
 import { observer } from 'mobx-react-lite'
 import { useContext, useEffect, useState } from 'react'
 import { Context } from '.'
-import './App.css'
 import AddWordForm from './components/AddWordForm'
-import LoginForm from './components/LoginForm'
+import LoginForm from './components/LoginForm/LoginForm'
 import { IUser } from './models/IUser'
 import UserService from './services/UserService'
+
+import classes from './App.module.css'
 
 const App = () => {
   const { store } = useContext(Context)
@@ -39,7 +40,7 @@ const App = () => {
   }
 
   return (
-    <div className='App-header'>
+    <div className={classes.app}>
       <h1>
         {store.isAuth
           ? `User ${store.user.email} authorized.`
