@@ -1,8 +1,27 @@
 .app {
+  display: flex;
+  flex-direction: column;
   width: 90%;
   max-width: 43rem;
   padding: 1rem;
   border-radius: 12px;
   background-color: white;
   margin: 3rem auto;
+}
+
+.header {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.button {
+  font: inherit;
+  background-color: #240370;
+  color: white;
+  border: 1px solid #240370;
+  height: 50px;
+  width: 80px;
+  border-radius: 4px;
+  cursor: pointer;
 }

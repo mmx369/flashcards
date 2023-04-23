@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-export const useInput = (validateFn: Function) => {
+export const useInput = (validateFn: (arg: string) => boolean) => {
   const [enteredValue, setEnteredValue] = useState('')
   const [isTouched, setIsTouched] = useState(false)
 

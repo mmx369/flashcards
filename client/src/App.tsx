@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react-lite'
 import { useContext, useEffect, useState } from 'react'
 import { Context } from '.'
-import AddWordForm from './components/AddWordForm'
+import AddWordForm from './components/AddWordForm/AddWordForm'
 import LoginForm from './components/LoginForm/LoginForm'
 import { IUser } from './models/IUser'
 import UserService from './services/UserService'
@@ -41,17 +41,22 @@ const App = () => {
 
   return (
     <div className={classes.app}>
-      <h1>
-        {store.isAuth
-          ? `User ${store.user.email} authorized.`
-          : `Not authorized.`}
-      </h1>
+      <div className={classes.header}>
+        <h5>
+          {store.isAuth
+            ? `You logged in as ${store.user.email}.`
+            : `Not authorized.`}
+        </h5>
+        <button className={classes.button} onClick={() => store.logout()}>
+          Log out
+        </button>
+      </div>
       <AddWordForm />
-      <button onClick={getUsers}>Get Users</button>
-      <button onClick={() => store.logout()}>Log out</button>
+
+      {/* <button onClick={getUsers}>Get Users</button>
       {users.map((user) => (
         <div key={user.email}>{user.email}</div>
-      ))}
+      ))} */}
     </div>
   )
 }

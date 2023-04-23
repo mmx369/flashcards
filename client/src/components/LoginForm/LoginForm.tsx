@@ -4,6 +4,7 @@ import { Context } from '../..'
 
 import { useInput } from '../../hooks/use-unput'
 import classes from './LoginForm.module.css'
+import { emailValidation, passwordValidation } from './validate'
 
 const LoginForm: FC = () => {
   const {
@@ -13,7 +14,7 @@ const LoginForm: FC = () => {
     valueChangeHandler: emailChangeHandler,
     inputBlurHandler: emailBlurHandler,
     reset: resetEmailInput,
-  } = useInput((value: string) => value.trim().includes('@')) //add validate function
+  } = useInput((value) => emailValidation(value))
 
   const {
     value: password,
@@ -22,7 +23,7 @@ const LoginForm: FC = () => {
     valueChangeHandler: passwordChangeHandler,
     inputBlurHandler: passwordBlurHandler,
     reset: resetPasswordInput,
-  } = useInput((value: string) => value.trim() !== '') //add validate function
+  } = useInput((value: string) => passwordValidation(value))
 
   const { store } = useContext(Context)
 
@@ -52,7 +53,7 @@ const LoginForm: FC = () => {
     : classes.form_control
 
   return (
-    <>
+    <div>
       <form onSubmit={formSubmissionHandler}>
         <div className={classes.control_group}>
           <div className={emailInputClasses}>
@@ -66,7 +67,9 @@ const LoginForm: FC = () => {
               value={email}
             />
             {emailHasError && (
-              <p className={classes.error_text}>Email must not be empty.</p>
+              <p className={classes.error_text}>
+                You should provide a valid email.
+              </p>
             )}
           </div>
           <div className={passwordInputClasses}>
@@ -81,21 +84,31 @@ const LoginForm: FC = () => {
             />
             {passwordHasError && (
               <p className={classes.error_text}>
-                Please enter a valid password.
+                Password must contain at least 1 lowercase, 1 uppercase, 1
+                numeric character and min 8 symbol.
               </p>
             )}
           </div>
           <div className={classes.form_actions}>
-            <button type='submit' disabled={!formIsValid}>
+            <button
+              className={classes.button}
+              type='submit'
+              disabled={!formIsValid}
+            >
               Sign In
+            </button>
+            <button
+              className={classes.button}
+              type='button'
+              disabled={!formIsValid}
+              onClick={() => store.registration(email, password)}
+            >
+              Sign Up
             </button>
           </div>
         </div>
       </form>
-      {/* <button onClick={() => store.registration(email, password)}>
-        Sign Up
-      </button> */}
-    </>
+    </div>
   )
 }
 
