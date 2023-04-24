@@ -7,6 +7,7 @@ import { IUser } from './models/IUser'
 import UserService from './services/UserService'
 
 import classes from './App.module.css'
+import { Card } from './components/Card/Card'
 
 const App = () => {
   const { store } = useContext(Context)
@@ -51,6 +52,7 @@ const App = () => {
           Log out
         </button>
       </div>
+      <Card />
       <AddWordForm />
 
       {/* <button onClick={getUsers}>Get Users</button>

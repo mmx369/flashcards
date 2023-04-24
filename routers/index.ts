@@ -20,6 +20,16 @@ router.get('/activate/:link', userAuthController.activate)
 router.get('/refresh', userAuthController.refresh)
 router.get('/users', authMiddleware, userAuthController.getUsers)
 
-router.post('/newentry', authMiddleware, dictionaryController.newEntry)
+router.get('/word', authMiddleware, dictionaryController.getWord)
+
+router.post(
+  '/newentry',
+  authMiddleware,
+  body('newWord').trim().notEmpty(),
+  body('translation').trim().notEmpty(),
+  body('type').trim().notEmpty(),
+  body('user').trim().isEmail(),
+  dictionaryController.newEntry
+)
 
 export default router
