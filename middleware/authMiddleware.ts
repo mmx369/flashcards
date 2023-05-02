@@ -9,12 +9,10 @@ export default function (req: Request, res: Response, next: NextFunction) {
 
   try {
     const accessToken = req.headers.authorization?.split(' ')[1]
-    console.log(333, accessToken)
     if (!accessToken) {
       return next(ApiError.UnauthorizedError())
     }
     const userData = tokenService.validateAccessToken(accessToken)
-    console.log(444, userData)
     if (!userData) {
       return next(ApiError.UnauthorizedError())
     }

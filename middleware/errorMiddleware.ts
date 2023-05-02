@@ -7,7 +7,6 @@ export default function (
   res: Response,
   next: NextFunction
 ) {
-  console.log(1111, err)
   if (err instanceof ApiError) {
     return res
       .status(err.status)

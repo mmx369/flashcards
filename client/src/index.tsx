@@ -1,4 +1,4 @@
-import React, { createContext } from 'react'
+import { createContext } from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App'
 import './index.css'
@@ -16,9 +16,7 @@ export const Context = createContext<State>({
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
-  <React.StrictMode>
-    <Context.Provider value={{ store }}>
-      <App />
-    </Context.Provider>
-  </React.StrictMode>
+  <Context.Provider value={{ store }}>
+    <App />
+  </Context.Provider>
 )
