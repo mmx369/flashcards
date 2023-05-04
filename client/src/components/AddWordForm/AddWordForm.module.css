@@ -3,6 +3,7 @@
 }
 
 .form_control input,
+.form_control textarea,
 .form_control label {
   display: block;
 }
@@ -13,6 +14,7 @@
 }
 
 .form_control input,
+.form_control textarea,
 .form_control select {
   font: inherit;
   padding: 0.5rem;
@@ -20,9 +22,11 @@
   border: 1px solid #ccc;
   width: 20rem;
   max-width: 100%;
+  margin-top: 1rem;
 }
 
-.form_control input:focus {
+.form_control input:focus,
+.form_control textarea:focus {
   outline: none;
   border-color: #240370;
   background-color: #e0d4fd;

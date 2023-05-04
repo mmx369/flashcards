@@ -1,5 +1,6 @@
 .card {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   font-weight: bold;
@@ -8,6 +9,14 @@
   border-radius: 25px;
   width: 300px;
   height: 150px;
+  text-align: center;
+}
+
+.example {
+  text-align: left;
+  font-weight: 100;
+  font-size: small;
+  padding: 0.5rem;
 }
 
 .form_control {

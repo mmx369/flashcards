@@ -1,4 +1,4 @@
-import { FC, FormEvent, useContext, useState } from 'react'
+import { FormEvent, useContext, useState } from 'react'
 import { Context } from '../..'
 import DictionaryService from '../../services/DictionaryService'
 
@@ -15,7 +15,7 @@ const selectOptions = [
   'prepositions',
 ]
 
-const AddWordForm: FC = () => {
+const AddWordForm = ({ lng }: { lng: string }) => {
   const { store } = useContext(Context)
 
   const [type, setType] = useState('')
@@ -38,6 +38,13 @@ const AddWordForm: FC = () => {
     reset: resetTranslationInput,
   } = useInput((value: string) => value.trim() !== '')
 
+  const {
+    value: example,
+    valueChangeHandler: exampleChangeHandler,
+    inputBlurHandler: exampleBlurHandler,
+    reset: resetExampleInput,
+  } = useInput((value: string) => true)
+
   let formIsValid = false
 
   if (
@@ -57,12 +64,15 @@ const AddWordForm: FC = () => {
       const response = await DictionaryService.addNewEntry({
         newWord: normilizeString(newWord),
         translation: normilizeString(translation),
+        example,
         type: normilizeString(type),
         user: store.user.email,
+        lng,
       })
       console.log('RESPONSE', response)
       resetNewWordInput()
       resetTranslationInput()
+      resetExampleInput()
     } catch (error) {
       console.log(error)
     }
@@ -107,6 +117,16 @@ const AddWordForm: FC = () => {
             {translationHasError && (
               <p className={classes.error_text}>Field must not be empty.</p>
             )}
+            <div className={classes.form_control}>
+              <textarea
+                rows={3}
+                maxLength={256}
+                placeholder='Examples'
+                onChange={exampleChangeHandler}
+                onBlur={exampleBlurHandler}
+                value={example}
+              />
+            </div>
           </div>
           <div className={classes.form_control}>
             <label htmlFor='type'>Type:</label>

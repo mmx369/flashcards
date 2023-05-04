@@ -3,4 +3,6 @@ export interface IDictionaryEntry {
   translation: string
   type: string
   user: string
+  lng: string
+  example?: string
 }

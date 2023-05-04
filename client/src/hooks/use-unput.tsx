@@ -7,7 +7,9 @@ export const useInput = (validateFn: (arg: string) => boolean) => {
   const valueIsValid = validateFn(enteredValue)
   const hasError = !valueIsValid && isTouched
 
-  const valueChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const valueChangeHandler = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setEnteredValue(e.target.value)
   }
 

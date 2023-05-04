@@ -4,27 +4,33 @@ import DictionaryService from '../../services/DictionaryService'
 
 import classes from './Card.module.css'
 
-export const Card = () => {
-  const [word, setWord] = useState<IWord>({} as IWord)
+export const Card = ({ lang }: { lang: string }) => {
+  const [words, setWords] = useState<IWord[]>([] as IWord[])
   const [isFrontSide, setIsFrontSide] = useState(true)
-
-  console.log(111, word)
-  console.log(222, isFrontSide)
+  const [word, setWord] = useState<IWord>({} as IWord)
 
   useEffect(() => {
-    console.log('USE EFFECT')
-    DictionaryService.fetchWord().then(({ data }) => {
-      setWord(data)
+    DictionaryService.fetchWord(lang).then(({ data }) => {
+      setWords(data)
+      setWord(data[0])
     })
-  }, [])
+  }, [lang])
 
   const buttonClickHandler = () => {
     if (isFrontSide) {
       setIsFrontSide(!isFrontSide)
     } else {
-      DictionaryService.fetchWord().then(({ data }) => {
-        setWord(data)
-      })
+      if (words.length === 1) {
+        DictionaryService.fetchWord(lang).then(({ data }) => {
+          setWords(data)
+          setWord(data[0])
+          setIsFrontSide(true)
+        })
+        return
+      }
+      const newWords = [...words.slice(1, words.length)]
+      setWords(newWords)
+      setWord(newWords[0])
       setIsFrontSide(true)
     }
   }
@@ -33,6 +39,7 @@ export const Card = () => {
     <div className={classes.control_group}>
       <div className={classes.card} onClick={buttonClickHandler}>
         {isFrontSide ? `${word.word}` : `${word.translation}`}
+        <div className={classes.example}>{!isFrontSide && word.example}</div>
       </div>
     </div>
   )

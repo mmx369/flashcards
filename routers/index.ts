@@ -20,7 +20,7 @@ router.get('/activate/:link', userAuthController.activate)
 router.get('/refresh', userAuthController.refresh)
 router.get('/users', authMiddleware, userAuthController.getUsers)
 
-router.get('/word', authMiddleware, dictionaryController.getWord)
+router.get('/word/:lng', authMiddleware, dictionaryController.getWord)
 
 router.post(
   '/newentry',
@@ -29,6 +29,7 @@ router.post(
   body('translation').trim().notEmpty(),
   body('type').trim().notEmpty(),
   body('user').trim().isEmail(),
+  body('lng').trim().notEmpty(),
   dictionaryController.newEntry
 )
 

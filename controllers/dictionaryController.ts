@@ -11,12 +11,14 @@ class DictionaryController {
         //@ts-ignore
         return next(ApiError.BadRequest('Validation error', errors.array()))
       }
-      const { newWord, translation, type, user } = req.body
+      const { newWord, translation, type, user, lng, example } = req.body
       const newEntry = await dictionaryService.addNewEntry(
         newWord,
         translation,
         type,
-        user
+        user,
+        lng,
+        example
       )
       res.json(newEntry)
     } catch (error) {
@@ -25,8 +27,9 @@ class DictionaryController {
   }
 
   async getWord(req: Request, res: Response, next: NextFunction) {
+    const currentLanguage = req.params.lng || 'eng'
     try {
-      const word = await dictionaryService.getWord()
+      const word = await dictionaryService.getWord(currentLanguage)
       res.json(word)
     } catch (error) {
       next(error)

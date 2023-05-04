@@ -8,7 +8,8 @@ export default class DictionaryService {
     return $api.post('/newentry', newEntry)
   }
 
-  static async fetchWord(): Promise<AxiosResponse<IWord>> {
-    return $api.get<IWord>('/word')
+  static async fetchWord(lang: string): Promise<AxiosResponse<IWord[]>> {
+    console.log(9999, lang)
+    return $api.get<IWord[]>(`/word/${lang}`)
   }
 }

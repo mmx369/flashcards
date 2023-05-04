@@ -9,6 +9,8 @@ const Dictionary = new Schema({
   hidden: { type: Boolean, default: false },
   counter: { type: Number, default: 0 },
   favs: { type: Boolean, default: false },
+  lng: { type: String, required: true },
+  example: { type: String, default: '' },
 })
 
 export default model('Dictionary', Dictionary)
