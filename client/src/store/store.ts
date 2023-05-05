@@ -5,6 +5,8 @@ import { IUser } from '../models/IUser'
 import { AuthResponse } from '../models/response/AuthResponse'
 import AuthService from '../services/AuthService'
 
+import 'react-toastify/dist/ReactToastify.css'
+
 export default class Store {
   user = {} as IUser
   isAuth = false
@@ -33,7 +35,7 @@ export default class Store {
       this.setAuth(true)
       this.setUser(response.data.user)
     } catch (error) {
-      console.log(error.response.data?.message)
+      throw error.response.data?.message
     }
   }
 
@@ -45,7 +47,7 @@ export default class Store {
       this.setAuth(true)
       this.setUser(response.data.user)
     } catch (error) {
-      console.log(error.response.data?.message)
+      throw error.response.data?.message
     }
   }
 

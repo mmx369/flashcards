@@ -5,6 +5,7 @@ import App from './App'
 import ErrorPage from './components/ErrorPage/ErrorPage'
 import './index.css'
 import EnglishPage from './pages/English'
+import RootLayout from './pages/Root'
 import TurkishPage from './pages/Turkish'
 import Store from './store/store'
 
@@ -15,16 +16,22 @@ interface State {
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <App />,
     errorElement: <ErrorPage />,
-  },
-  {
-    path: 'eng',
-    element: <EnglishPage />,
-  },
-  {
-    path: 'tr',
-    element: <TurkishPage />,
+    element: <RootLayout />,
+    children: [
+      {
+        path: '/',
+        element: <App />,
+      },
+      {
+        path: 'eng',
+        element: <EnglishPage />,
+      },
+      {
+        path: 'tr',
+        element: <TurkishPage />,
+      },
+    ],
   },
 ])
 

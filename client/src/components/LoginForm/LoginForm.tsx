@@ -6,6 +6,10 @@ import { useInput } from '../../hooks/use-unput'
 import classes from './LoginForm.module.css'
 import { emailValidation, passwordValidation } from './validate'
 
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import { notify } from '../../utils/notify'
+
 const LoginForm: FC = () => {
   const {
     value: email,
@@ -38,10 +42,25 @@ const LoginForm: FC = () => {
     if (!enteredEmailIsValid && !enteredPasswordIsValid) {
       return
     }
-    console.log(email, password)
-    store.login(email, password)
-    resetEmailInput()
-    resetPasswordInput()
+    store
+      .login(email, password)
+      .then((res) => {
+        resetEmailInput()
+        resetPasswordInput()
+      })
+      .catch((error) => notify(error, 'error'))
+  }
+
+  const registrationHandler = () => {
+    store
+      .registration(email, password)
+      .then((res) => {
+        resetEmailInput()
+        resetPasswordInput()
+      })
+      .catch((error) => {
+        notify(error, 'error')
+      })
   }
 
   const emailInputClasses = emailHasError
@@ -53,7 +72,7 @@ const LoginForm: FC = () => {
     : classes.form_control
 
   return (
-    <div>
+    <>
       <form onSubmit={formSubmissionHandler}>
         <div className={classes.control_group}>
           <div className={emailInputClasses}>
@@ -101,14 +120,15 @@ const LoginForm: FC = () => {
               className={classes.button}
               type='button'
               disabled={!formIsValid}
-              onClick={() => store.registration(email, password)}
+              onClick={registrationHandler}
             >
               Sign Up
             </button>
           </div>
         </div>
       </form>
-    </div>
+      <ToastContainer />
+    </>
   )
 }
 
