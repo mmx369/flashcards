@@ -3,8 +3,9 @@ import { useContext, useEffect } from 'react'
 import { Context } from '.'
 import LoginForm from './components/LoginForm/LoginForm'
 
+import { RotatingLines } from 'react-loader-spinner'
 import classes from './App.module.css'
-import { NavBar } from './components/Navigation/NavBar'
+import { Nav } from './components/Navigation/Nav'
 
 const App = () => {
   const { store } = useContext(Context)
@@ -16,7 +17,15 @@ const App = () => {
   }, [store])
 
   if (store.isLoading) {
-    return <div className='App-header'>Loading...</div>
+    return (
+      <RotatingLines
+        strokeColor='grey'
+        strokeWidth='5'
+        animationDuration='0.75'
+        width='96'
+        visible={true}
+      />
+    )
   }
 
   if (!store.isAuth) {
@@ -30,7 +39,7 @@ const App = () => {
   return (
     <div className={classes.app}>
       <div>
-        <NavBar />
+        <Nav />
       </div>
     </div>
   )

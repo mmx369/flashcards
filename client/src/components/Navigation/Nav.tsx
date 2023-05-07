@@ -1,9 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-import classes from './NavBar.module.css'
+import classes from './Nav.module.css'
 
-export const NavBar: React.FC = () => {
+export const Nav: React.FC = () => {
   return (
     <nav className={classes.nav}>
       <Link to={`eng`} className={classes.btn}>

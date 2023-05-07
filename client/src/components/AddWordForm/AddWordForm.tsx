@@ -6,6 +6,10 @@ import { useInput } from '../../hooks/use-unput'
 import { normilizeString } from '../../utils/normilize-string'
 import classes from './AddWordForm.module.css'
 
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import { notify } from '../../utils/notify'
+
 const selectOptions = [
   'nouns',
   'adjectives',
@@ -61,7 +65,7 @@ const AddWordForm = ({ lng }: { lng: string }) => {
       return
     }
     try {
-      const response = await DictionaryService.addNewEntry({
+      await DictionaryService.addNewEntry({
         newWord: normilizeString(newWord),
         translation: normilizeString(translation),
         example,
@@ -69,12 +73,12 @@ const AddWordForm = ({ lng }: { lng: string }) => {
         user: store.user.email,
         lng,
       })
-      console.log('RESPONSE', response)
+      notify('Word added succefully!', 'success')
       resetNewWordInput()
       resetTranslationInput()
       resetExampleInput()
     } catch (error) {
-      console.log(error)
+      notify(error, 'error')
     }
   }
 
@@ -154,6 +158,7 @@ const AddWordForm = ({ lng }: { lng: string }) => {
           </button>
         </div>
       </form>
+      <ToastContainer />
     </div>
   )
 }

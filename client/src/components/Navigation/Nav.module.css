@@ -1,0 +1,18 @@
+.nav {
+    display: flex;
+    flex-direction: column;
+}
+
+.btn {
+    background-color: #240370;
+    color: white;
+    padding: 1rem 1.5rem;
+    text-decoration: none;
+    border-radius: 25px;
+    margin: 1rem 2rem;
+    text-align: center;
+}
+
+.btn:hover {
+    background-color: #223094;
+}
