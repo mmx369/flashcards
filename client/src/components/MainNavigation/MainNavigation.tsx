@@ -2,6 +2,7 @@ import { observer } from 'mobx-react-lite'
 import { useContext } from 'react'
 import { NavLink } from 'react-router-dom'
 import { Context } from '../..'
+import { Button } from '../UI'
 import classes from './MainNavigation.module.css'
 
 function MainNavigation() {
@@ -25,9 +26,7 @@ function MainNavigation() {
           Home
         </NavLink>
         {store.isAuth && (
-          <button className={classes.button} onClick={() => store.logout()}>
-            Log out
-          </button>
+          <Button onClick={() => store.logout()}>Log out</Button>
         )}
       </header>
     </>

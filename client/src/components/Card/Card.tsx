@@ -35,9 +35,24 @@ export const Card = ({ lang }: { lang: string }) => {
     }
   }
 
+  if (words.length === 0) {
+    return (
+      <div className={classes.control_group}>
+        <div className={classes.card}>
+          Your dictionary is empty. Add your words!
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className={classes.control_group}>
-      <div className={classes.card} onClick={buttonClickHandler}>
+      <div
+        className={
+          isFrontSide ? classes.card : `${classes.card} ${classes.card_reverse}`
+        }
+        onClick={buttonClickHandler}
+      >
         {isFrontSide ? `${word.word}` : `${word.translation}`}
         <div className={classes.example}>{!isFrontSide && word.example}</div>
       </div>

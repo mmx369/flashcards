@@ -9,7 +9,6 @@ export default class DictionaryService {
   }
 
   static async fetchWord(lang: string): Promise<AxiosResponse<IWord[]>> {
-    console.log(9999, lang)
     return $api.get<IWord[]>(`/word/${lang}`)
   }
 }

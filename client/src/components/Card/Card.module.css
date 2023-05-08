@@ -4,12 +4,80 @@
   justify-content: center;
   align-items: center;
   font-weight: bold;
+  color: blue;
   margin-bottom: 10px;
-  border: 2px blue solid;
   border-radius: 25px;
   width: 300px;
   height: 150px;
   text-align: center;
+  background: white;
+  transition: border-radius 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: inset 0 -3em 3em rgba(0, 0, 0, 0.1), 0 0 0 2px rgb(190, 190, 190),
+    0.3em 0.3em 1em rgba(0, 0, 0, 0.3);
+}
+
+.card_reverse {
+  animation: 1s ease-in-out forwards fadeIn;
+  -webkit-animation: 1s ease-in-out forwards fadeIn;
+  -moz-animation: 1s ease-in-out forwards fadeIn;
+  -o-animation: 1s ease-in-out forwards fadeIn;
+  -ms-animation: 1s ease-in-out forwards fadeIn;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    background-color: white;
+  }
+  100% {
+    opacity: 1;
+    background-color: aliceblue;
+    color: #33059e;
+  }
+}
+
+@-moz-keyframes fadeIn {
+  0% {
+    opacity: 0;
+    background-color: white;
+  }
+  100% {
+    opacity: 1;
+    background-color: aliceblue;
+  }
+}
+
+@-webkit-keyframes fadeIn {
+  0% {
+    opacity: 0;
+    background-color: white;
+  }
+  100% {
+    opacity: 1;
+    background-color: aliceblue;
+  }
+}
+
+@-o-keyframes fadeIn {
+  0% {
+    opacity: 0;
+    background-color: white;
+  }
+  100% {
+    opacity: 1;
+    background-color: aliceblue;
+  }
+}
+
+@-ms-keyframes fadeIn {
+  0% {
+    opacity: 0;
+    background-color: white;
+  }
+  100% {
+    opacity: 1;
+    background-color: aliceblue;
+  }
 }
 
 .example {

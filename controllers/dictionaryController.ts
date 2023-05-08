@@ -3,8 +3,16 @@ import { validationResult } from 'express-validator'
 import ApiError from '../exceptions/api-error'
 import dictionaryService from '../service/dictionary-service'
 
+export interface IGetUserInfoRequest extends Request {
+  user?: {
+    email: string
+    id: string
+    isActivated: boolean
+  }
+}
+
 class DictionaryController {
-  async newEntry(req: Request, res: Response, next: NextFunction) {
+  async newEntry(req: IGetUserInfoRequest, res: Response, next: NextFunction) {
     try {
       const errors = validationResult(req)
       if (!errors.isEmpty()) {
@@ -26,10 +34,12 @@ class DictionaryController {
     }
   }
 
-  async getWord(req: Request, res: Response, next: NextFunction) {
+  async getWord(req: IGetUserInfoRequest, res: Response, next: NextFunction) {
     const currentLanguage = req.params.lng || 'eng'
+    const username = req.user?.email || ''
+    console.log(111, username)
     try {
-      const word = await dictionaryService.getWord(currentLanguage)
+      const word = await dictionaryService.getWord(currentLanguage, username)
       res.json(word)
     } catch (error) {
       next(error)

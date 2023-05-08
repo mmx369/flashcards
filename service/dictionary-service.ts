@@ -20,13 +20,14 @@ class DictionaryService {
     return newEntry
   }
 
-  async getWord(lng: string) {
+  async getWord(lng: string, username: string) {
     const words = await Dictionary.find(
-      { lng },
+      { lng, user: username },
       { word: 1, translation: 1, example: 1 },
       { limit: 15 }
     ).sort({ counter: 'asc' })
     console.log(111, words.length)
+    console.log(222, words)
     const wordsIds = [] as any
     words.map((word) => wordsIds.push(word._id))
     await Dictionary.updateMany(
