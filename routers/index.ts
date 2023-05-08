@@ -27,7 +27,6 @@ router.post(
   authMiddleware,
   body('newWord').trim().notEmpty(),
   body('translation').trim().notEmpty(),
-  body('type').trim().notEmpty(),
   body('user').trim().isEmail(),
   body('lng').trim().notEmpty(),
   dictionaryController.newEntry

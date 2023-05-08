@@ -22,7 +22,6 @@ export const Button: React.FC<IButtonProps> = ({
   onClick,
   ...props
 }) => {
-  console.log(8888, isDisabled)
   return (
     <button
       className={cx('Button', className, { Button__disabled: isDisabled })}

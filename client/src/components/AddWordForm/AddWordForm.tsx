@@ -1,4 +1,4 @@
-import { FormEvent, useContext, useState } from 'react'
+import { FormEvent, useContext } from 'react'
 import { Context } from '../..'
 import DictionaryService from '../../services/DictionaryService'
 
@@ -10,19 +10,8 @@ import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { notify } from '../../utils/notify'
 
-const selectOptions = [
-  'nouns',
-  'adjectives',
-  'verbs',
-  'numerals',
-  'pronouns',
-  'prepositions',
-]
-
 const AddWordForm = ({ lng }: { lng: string }) => {
   const { store } = useContext(Context)
-
-  const [type, setType] = useState('')
 
   const {
     value: newWord,
@@ -51,11 +40,7 @@ const AddWordForm = ({ lng }: { lng: string }) => {
 
   let formIsValid = false
 
-  if (
-    enteredNewWordIsValid &&
-    enteredTranslationIsValid &&
-    type.trim() !== ''
-  ) {
+  if (enteredNewWordIsValid && enteredTranslationIsValid) {
     formIsValid = true
   }
 
@@ -69,7 +54,6 @@ const AddWordForm = ({ lng }: { lng: string }) => {
         newWord: normilizeString(newWord),
         translation: normilizeString(translation),
         example,
-        type: normilizeString(type),
         user: store.user.email,
         lng,
       })
@@ -80,10 +64,6 @@ const AddWordForm = ({ lng }: { lng: string }) => {
     } catch (error) {
       notify(error, 'error')
     }
-  }
-
-  const selectChangeHandler = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setType(event.target.value)
   }
 
   const newWordInputClasses = newWordHasError
@@ -131,23 +111,6 @@ const AddWordForm = ({ lng }: { lng: string }) => {
                 value={example}
               />
             </div>
-          </div>
-          <div className={classes.form_control}>
-            <label htmlFor='type'>Type:</label>
-            <select
-              onChange={selectChangeHandler}
-              id='type'
-              defaultValue={'DEFAULT'}
-            >
-              <option value='DEFAULT' disabled>
-                Choose a type ...
-              </option>
-              {selectOptions.map((option) => (
-                <option key={option} value={option}>
-                  {option}
-                </option>
-              ))}
-            </select>
           </div>
           <button
             className={classes.button}
