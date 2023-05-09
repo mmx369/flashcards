@@ -8,6 +8,7 @@ dotenv.config()
 
 import cookieParser from 'cookie-parser'
 import mongoose from 'mongoose'
+import path from 'path'
 
 const app: Express = express()
 
@@ -20,11 +21,19 @@ app.use(
 )
 app.use(cookieParser())
 
+app.use(express.static(path.join(__dirname, '../client/build')))
+
+console.log(111, path.join(__dirname, '../client/build'))
+
 app.get('/', (req: Request, res: Response) => {
-  res.send('Hello World From the Server!')
+  res.sendFile(path.join(__dirname, '../client/index.html'))
 })
 
 app.use('/api', authRouter)
+
+app.get('*', (req: Request, res: Response) => {
+  res.sendFile(path.join(__dirname, '../client/build/index.html'))
+})
 app.use(errorMiddleware)
 
 const PORT = process.env.PORT || 8000
