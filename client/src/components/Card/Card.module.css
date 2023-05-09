@@ -14,6 +14,7 @@
   transition: border-radius 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   box-shadow: inset 0 -3em 3em rgba(0, 0, 0, 0.1), 0 0 0 2px rgb(190, 190, 190),
     0.3em 0.3em 1em rgba(0, 0, 0, 0.3);
+  position: relative;
 }
 
 .card_reverse {
@@ -22,6 +23,18 @@
   -moz-animation: 1s ease-in-out forwards fadeIn;
   -o-animation: 1s ease-in-out forwards fadeIn;
   -ms-animation: 1s ease-in-out forwards fadeIn;
+}
+
+.card_speaker {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+.card_speaker:hover {
+  opacity: 1;
 }
 
 @keyframes fadeIn {
