@@ -3,6 +3,11 @@ dotenv.config()
 
 import nodemailer from 'nodemailer'
 
+export const API_URL =
+  process.env.NODE_ENV === 'production'
+    ? process.env.API_URL_PROD
+    : process.env.API_URL_DEV
+
 class MailService {
   constructor() {
     //@ts-ignore
@@ -26,7 +31,7 @@ class MailService {
     await this.transporter.sendMail({
       from: process.env.SMTP_USER,
       to,
-      subject: `Account activation ${process.env.API_URL}`,
+      subject: `Account activation ${API_URL}`,
       text: '',
       html: `
       <div>
