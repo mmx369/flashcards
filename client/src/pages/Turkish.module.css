@@ -20,6 +20,10 @@
   margin: 1rem;
 }
 
+.actions_upper {
+  margin-bottom: 1rem;
+}
+
 .button {
   font: inherit;
   background-color: #240370;

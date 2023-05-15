@@ -11,6 +11,7 @@ import classes from './Turkish.module.css'
 const TurkishPage: React.FC = () => {
   const { store } = useContext(Context)
   const [isShowAddForm, setIsShowAddForm] = useState(false)
+  const [swapCards, setSwapCards] = useState(true)
   const navigate = useNavigate()
 
   const location = useLocation()
@@ -44,7 +45,17 @@ const TurkishPage: React.FC = () => {
 
   return (
     <div className={classes.app}>
-      {!isShowAddForm && <Card lang={currentLanguage} />}
+      {!isShowAddForm && (
+        <div className={classes.actions_upper}>
+          <button
+            className={classes.button}
+            onClick={() => setSwapCards(!swapCards)}
+          >
+            Swap Language
+          </button>
+        </div>
+      )}
+      {!isShowAddForm && <Card lang={currentLanguage} swap={swapCards} />}
       <div className={classes.header}>
         <div className={classes.actions}>
           <button
