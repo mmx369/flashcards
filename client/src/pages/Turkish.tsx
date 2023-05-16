@@ -5,13 +5,12 @@ import { Context } from '..'
 import { RotatingLines } from 'react-loader-spinner'
 import { useLocation, useNavigate } from 'react-router-dom'
 import AddWordForm from '../components/AddWordForm/AddWordForm'
-import { Card } from '../components/Card/Card'
+import Card from '../components/Card/Card'
 import classes from './Turkish.module.css'
 
 const TurkishPage: React.FC = () => {
   const { store } = useContext(Context)
   const [isShowAddForm, setIsShowAddForm] = useState(false)
-  const [swapCards, setSwapCards] = useState(true)
   const navigate = useNavigate()
 
   const location = useLocation()
@@ -49,13 +48,13 @@ const TurkishPage: React.FC = () => {
         <div className={classes.actions_upper}>
           <button
             className={classes.button}
-            onClick={() => setSwapCards(!swapCards)}
+            onClick={() => store.setLanguage(!store.isRussianLng)}
           >
-            Swap Language
+            Swap {store.isRussianLng ? '(ru -> tr)' : '(tr -> ru)'}
           </button>
         </div>
       )}
-      {!isShowAddForm && <Card lang={currentLanguage} swap={swapCards} />}
+      {!isShowAddForm && <Card lang={currentLanguage} />}
       <div className={classes.header}>
         <div className={classes.actions}>
           <button

@@ -1,12 +1,16 @@
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { useSpeechSynthesis } from 'react-speech-kit'
 import { ReactComponent as VolumeSvg } from '../../assets/volume.svg'
 import { IWord } from '../../models/IWord'
 import DictionaryService from '../../services/DictionaryService'
 
+import { observer } from 'mobx-react-lite'
+
+import { Context } from '../..'
 import classes from './Card.module.css'
 
-export const Card = ({ lang, swap }: { lang: string; swap: boolean }) => {
+const Card = ({ lang }: { lang: string }) => {
+  const { store } = useContext(Context)
   const [words, setWords] = useState<IWord[]>([] as IWord[])
   const [isFrontSide, setIsFrontSide] = useState(true)
   const [word, setWord] = useState<IWord>({} as IWord)
@@ -22,10 +26,6 @@ export const Card = ({ lang, swap }: { lang: string; swap: boolean }) => {
       setSpeaker(data[0])
     })
   }, [lang])
-
-  useEffect(() => {
-    setIsFrontSide(!isFrontSide)
-  }, [swap])
 
   const buttonClickHandler = () => {
     if (isFrontSide) {
@@ -71,20 +71,25 @@ export const Card = ({ lang, swap }: { lang: string; swap: boolean }) => {
         }
         onClick={buttonClickHandler}
       >
-        {swap && supported && isFrontSide && lang === 'eng' && (
+        {!store.isRussianLng && supported && isFrontSide && lang === 'eng' && (
           <div className={classes.card_speaker} onClick={handleSpeech}>
             <VolumeSvg />
           </div>
         )}
-        {!swap && supported && !isFrontSide && lang === 'eng' && (
+        {store.isRussianLng && supported && !isFrontSide && lang === 'eng' && (
           <div className={classes.card_speaker} onClick={handleSpeech}>
             <VolumeSvg />
           </div>
         )}
-        {swap && (isFrontSide ? `${word.word}` : `${word.translation}`)}
-        {!swap && (isFrontSide ? `${word.translation}` : `${word.word}`)}
+
+        {!store.isRussianLng &&
+          (isFrontSide ? `${word.word}` : `${word.translation}`)}
+        {store.isRussianLng &&
+          (isFrontSide ? `${word.translation}` : `${word.word}`)}
         <div className={classes.example}>{!isFrontSide && word.example}</div>
       </div>
     </div>
   )
 }
+
+export default observer(Card)

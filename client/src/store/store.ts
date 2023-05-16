@@ -11,6 +11,7 @@ export default class Store {
   user = {} as IUser
   isAuth = false
   isLoading = false
+  isRussianLng = false
   constructor() {
     makeAutoObservable(this)
   }
@@ -25,6 +26,10 @@ export default class Store {
 
   setLoading(bool: boolean) {
     this.isLoading = bool
+  }
+
+  setLanguage(bool: boolean) {
+    this.isRussianLng = bool
   }
 
   async login(email: string, password: string) {
