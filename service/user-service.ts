@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { UserDto } from '../dtos/user-dto'
 import ApiError from '../exceptions/api-error'
 import UserModel from '../models/User'
-import mailService from './mail-service'
+import mailService, { API_URL } from './mail-service'
 import {
   default as tokenService,
   default as TokenService,
@@ -24,7 +24,7 @@ class UserService {
     })
     await mailService.sendActivationMail(
       email,
-      `${process.env.API_URL}/api/activate/${activationLink}`
+      `${API_URL}/api/activate/${activationLink}`
     )
     const userDto = new UserDto(user)
     const tokens = TokenService.generateTokens({ ...userDto })
