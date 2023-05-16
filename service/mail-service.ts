@@ -4,7 +4,7 @@ dotenv.config()
 import nodemailer from 'nodemailer'
 
 export const API_URL =
-  process.env.NODE_ENV === 'production'
+  process.env.NODE_ENV?.trim() === 'production'
     ? process.env.API_URL_PROD
     : process.env.API_URL_DEV
 
