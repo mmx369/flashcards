@@ -1,3 +1,3 @@
 export const normilizeString = (arg: string) => {
-  return arg.trim().toLowerCase()
+  return arg.trim()
 }
