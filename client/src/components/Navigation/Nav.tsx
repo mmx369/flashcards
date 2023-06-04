@@ -13,6 +13,10 @@ export const Nav: React.FC = () => {
       <Link to={`tr`} className={classes.btn}>
         Turkish
       </Link>
+
+      <Link to={`kr`} className={classes.btn}>
+        Korean
+      </Link>
     </nav>
   )
 }

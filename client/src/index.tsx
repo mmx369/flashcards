@@ -5,6 +5,7 @@ import App from './App'
 import ErrorPage from './components/ErrorPage/ErrorPage'
 import './index.css'
 import EnglishPage from './pages/English'
+import KoreanPage from './pages/Korean'
 import RootLayout from './pages/Root'
 import TurkishPage from './pages/Turkish'
 import Store from './store/store'
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
       {
         path: 'tr',
         element: <TurkishPage />,
+      },
+      {
+        path: 'kr',
+        element: <KoreanPage />,
       },
     ],
   },
