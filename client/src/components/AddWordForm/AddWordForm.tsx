@@ -62,7 +62,7 @@ const AddWordForm = ({ lng }: { lng: string }) => {
       resetTranslationInput()
       resetExampleInput()
     } catch (error) {
-      notify(error, 'error')
+      notify(error.response.data.message, 'error')
     }
   }
 

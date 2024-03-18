@@ -1,9 +1,16 @@
+.control_group {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  flex-wrap: wrap;
+}
+
 .card {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  font-weight: bold;
+  font-size: 2rem;
   color: blue;
   margin-bottom: 10px;
   border-radius: 25px;
@@ -23,11 +30,12 @@
   -moz-animation: 1s ease-in-out forwards fadeIn;
   -o-animation: 1s ease-in-out forwards fadeIn;
   -ms-animation: 1s ease-in-out forwards fadeIn;
+  font-size: 2rem;
 }
 
 .card_speaker {
   position: absolute;
-  top: 15px;
+  top: 5px;
   right: 15px;
   cursor: pointer;
   opacity: 0.6;
@@ -96,8 +104,8 @@
 .example {
   text-align: left;
   font-weight: 100;
-  font-size: small;
   padding: 0.5rem;
+  /* font-size: 1rem; */
 }
 
 .form_control {
@@ -128,14 +136,6 @@
   outline: none;
   border-color: #240370;
   background-color: #e0d4fd;
-}
-
-.control_group {
-  display: flex;
-  flex-direction: column;
-  align-content: center;
-  column-gap: 1rem;
-  flex-wrap: wrap;
 }
 
 .control_group .form_control {

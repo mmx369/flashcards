@@ -5,25 +5,26 @@ import { IWord } from '../../models/IWord'
 import DictionaryService from '../../services/DictionaryService'
 
 import { observer } from 'mobx-react-lite'
-
 import { Context } from '../..'
 import classes from './Card.module.css'
 
 const Card = ({ lang }: { lang: string }) => {
   const { store } = useContext(Context)
-  const [words, setWords] = useState<IWord[]>([] as IWord[])
   const [isFrontSide, setIsFrontSide] = useState(true)
+  const [words, setWords] = useState<IWord[]>([])
   const [word, setWord] = useState<IWord>({} as IWord)
+  const [isLoading, setIsLoading] = useState<boolean>(true)
   const [speaker, setSpeaker] = useState<IWord>({} as IWord)
-
   const { speak, supported, voices } = useSpeechSynthesis()
-  const voice = voices[2] //En_US
+
+  const voice = lang === 'kr' ? voices[16] : voices[2]
 
   useEffect(() => {
     DictionaryService.fetchWord(lang).then(({ data }) => {
       setWords(data)
       setWord(data[0])
       setSpeaker(data[0])
+      setIsLoading(false)
     })
   }, [lang])
 
@@ -53,7 +54,15 @@ const Card = ({ lang }: { lang: string }) => {
     speak({ text: speaker.word, voice })
   }
 
-  if (words.length === 0) {
+  if (isLoading) {
+    return (
+      <div className={classes.control_group}>
+        <div className={classes.card}>Loading...</div>
+      </div>
+    )
+  }
+
+  if (!isLoading && words.length === 0) {
     return (
       <div className={classes.control_group}>
         <div className={classes.card}>
@@ -71,22 +80,41 @@ const Card = ({ lang }: { lang: string }) => {
         }
         onClick={buttonClickHandler}
       >
-        {!store.isRussianLng && supported && isFrontSide && lang === 'eng' && (
+        {isFrontSide && !store.isRussianLng && lang !== 'tr' && (
           <div className={classes.card_speaker} onClick={handleSpeech}>
             <VolumeSvg />
           </div>
         )}
-        {store.isRussianLng && supported && !isFrontSide && lang === 'eng' && (
+        {!isFrontSide && store.isRussianLng && lang !== 'tr' && (
           <div className={classes.card_speaker} onClick={handleSpeech}>
             <VolumeSvg />
           </div>
         )}
 
-        {!store.isRussianLng &&
-          (isFrontSide ? `${word.word}` : `${word.translation}`)}
-        {store.isRussianLng &&
-          (isFrontSide ? `${word.translation}` : `${word.word}`)}
-        <div className={classes.example}>{!isFrontSide && word.example}</div>
+        {!store.isRussianLng && (
+          <>
+            <div className={classes.example}>
+              {!isFrontSide ? word.translation : word.word}
+            </div>
+            <div className={classes.example}>
+              {!isFrontSide && (
+                <div style={{ fontSize: '1rem' }}>{word.example}</div>
+              )}
+            </div>
+          </>
+        )}
+        {store.isRussianLng && (
+          <>
+            <div className={classes.example}>
+              {!isFrontSide ? word.word : word.translation}
+            </div>
+            <div className={classes.example}>
+              {!isFrontSide && (
+                <div style={{ fontSize: '1rem' }}>{word.example}</div>
+              )}
+            </div>
+          </>
+        )}
       </div>
     </div>
   )

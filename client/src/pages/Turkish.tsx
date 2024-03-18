@@ -50,7 +50,7 @@ const TurkishPage: React.FC = () => {
             className={classes.button}
             onClick={() => store.setLanguage(!store.isRussianLng)}
           >
-            Swap {store.isRussianLng ? '(ru -> tr)' : '(tr -> ru)'}
+            Swap {store.isRussianLng ? '(=> tr)' : '(tr =>)'}
           </button>
         </div>
       )}
