@@ -1,4 +1,4 @@
-import Dictionary from '../models/Dictionary'
+import Dictionary from '../models/Dictionary';
 
 class DictionaryService {
   async addNewEntry(
@@ -14,8 +14,8 @@ class DictionaryService {
       user,
       lng,
       example,
-    })
-    return newEntry
+    });
+    return newEntry;
   }
 
   async getWord(lng: string, username: string) {
@@ -23,15 +23,21 @@ class DictionaryService {
       { lng, user: username },
       { word: 1, translation: 1, example: 1 },
       { limit: 15 }
-    ).sort({ counter: 'asc' })
-    const wordsIds = [] as any
-    words.map((word) => wordsIds.push(word._id))
+    ).sort({ counter: 'asc' });
+    const wordsIds = [] as any;
+    words.map((word) => wordsIds.push(word._id));
     await Dictionary.updateMany(
       { _id: { $in: wordsIds } },
       { $inc: { counter: 1 } }
-    )
-    return words
+    );
+    return words;
+  }
+
+  async deleteWord(id: string) {
+    const word = await Dictionary.findByIdAndDelete(id);
+    console.log(9876, word);
+    return word;
   }
 }
 
-export default new DictionaryService()
+export default new DictionaryService();

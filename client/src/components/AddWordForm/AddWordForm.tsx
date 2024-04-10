@@ -1,17 +1,17 @@
-import { FormEvent, useContext } from 'react'
-import { Context } from '../..'
-import DictionaryService from '../../services/DictionaryService'
+import { FormEvent, useContext } from 'react';
+import { Context } from '../..';
+import DictionaryService from '../../services/DictionaryService';
 
-import { useInput } from '../../hooks/use-unput'
-import { normilizeString } from '../../utils/normilize-string'
-import classes from './AddWordForm.module.css'
+import { useInput } from '../../hooks/use-unput';
+import { normilizeString } from '../../utils/normilize-string';
+import classes from './AddWordForm.module.css';
 
-import { ToastContainer } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
-import { notify } from '../../utils/notify'
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { notify } from '../../utils/notify';
 
-const AddWordForm = ({ lng }: { lng: string }) => {
-  const { store } = useContext(Context)
+export const AddWordForm = ({ lng }: { lng: string }) => {
+  const { store } = useContext(Context);
 
   const {
     value: newWord,
@@ -20,7 +20,7 @@ const AddWordForm = ({ lng }: { lng: string }) => {
     valueChangeHandler: newWordChangeHandler,
     inputBlurHandler: newWordlBlurHandler,
     reset: resetNewWordInput,
-  } = useInput((value: string) => value.trim() !== '')
+  } = useInput((value: string) => value.trim() !== '');
 
   const {
     value: translation,
@@ -29,25 +29,25 @@ const AddWordForm = ({ lng }: { lng: string }) => {
     valueChangeHandler: translationChangeHandler,
     inputBlurHandler: translationBlurHandler,
     reset: resetTranslationInput,
-  } = useInput((value: string) => value.trim() !== '')
+  } = useInput((value: string) => value.trim() !== '');
 
   const {
     value: example,
     valueChangeHandler: exampleChangeHandler,
     inputBlurHandler: exampleBlurHandler,
     reset: resetExampleInput,
-  } = useInput((value: string) => true)
+  } = useInput((value: string) => true);
 
-  let formIsValid = false
+  let formIsValid = false;
 
   if (enteredNewWordIsValid && enteredTranslationIsValid) {
-    formIsValid = true
+    formIsValid = true;
   }
 
   const formSubmitHandler = async (e: FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
     if (!enteredNewWordIsValid && !enteredTranslationIsValid) {
-      return
+      return;
     }
     try {
       await DictionaryService.addNewEntry({
@@ -56,23 +56,23 @@ const AddWordForm = ({ lng }: { lng: string }) => {
         example,
         user: store.user.email,
         lng,
-      })
-      notify('Word added succefully!', 'success')
-      resetNewWordInput()
-      resetTranslationInput()
-      resetExampleInput()
+      });
+      notify('Word added succefully!', 'success');
+      resetNewWordInput();
+      resetTranslationInput();
+      resetExampleInput();
     } catch (error) {
-      notify(error.response.data.message, 'error')
+      notify(error.response.data.message, 'error');
     }
-  }
+  };
 
   const newWordInputClasses = newWordHasError
     ? `${classes.form_control} ${classes.invalid}`
-    : classes.form_control
+    : classes.form_control;
 
   const translationInputClasses = translationHasError
     ? `${classes.form_control} ${classes.invalid}`
-    : classes.form_control
+    : classes.form_control;
 
   return (
     <div>
@@ -123,7 +123,5 @@ const AddWordForm = ({ lng }: { lng: string }) => {
       </form>
       <ToastContainer />
     </div>
-  )
-}
-
-export default AddWordForm
+  );
+};

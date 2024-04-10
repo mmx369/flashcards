@@ -1,34 +1,27 @@
-import { observer } from 'mobx-react-lite'
-import { useContext, useEffect, useState } from 'react'
-import { Context } from '..'
+import { observer } from 'mobx-react-lite';
+import { useContext, useState } from 'react';
+import { Context } from '..';
 
-import { RotatingLines } from 'react-loader-spinner'
-import { useLocation, useNavigate } from 'react-router-dom'
-import AddWordForm from '../components/AddWordForm/AddWordForm'
-import Card from '../components/Card/Card'
-import classes from './English.module.css'
+import { RotatingLines } from 'react-loader-spinner';
+import { AddWordForm } from '../components/AddWordForm/AddWordForm';
+import Card from '../components/Card/CardContainer';
+import LoginForm from '../components/LoginForm/LoginForm';
+import { Button } from '../components/UI';
+import { useCheckAuth } from '../hooks/useCheckAuth';
+import { useGetCurrentLanguage } from '../hooks/useGetCurrentLanguage';
+import classes from './English.module.css';
 
 const EnglishPage: React.FC = () => {
-  const { store } = useContext(Context)
-  const [isShowAddForm, setIsShowAddForm] = useState(false)
-  const navigate = useNavigate()
+  const { store } = useContext(Context);
+  const { isLoading } = useCheckAuth();
+  const { currentLanguage } = useGetCurrentLanguage();
+  const [isShowAddForm, setIsShowAddForm] = useState(false);
 
-  const location = useLocation()
-  const currentLanguage = location.pathname.slice(1)
+  if (!store.isAuth) {
+    return <LoginForm />;
+  }
 
-  useEffect(() => {
-    if (localStorage.getItem('token')) {
-      store.checkAuth()
-    }
-  }, [store])
-
-  useEffect(() => {
-    if (!store.isAuth) {
-      navigate('/')
-    }
-  }, [store.isAuth, navigate])
-
-  if (store.isLoading) {
+  if (isLoading) {
     return (
       <div>
         <RotatingLines
@@ -39,37 +32,38 @@ const EnglishPage: React.FC = () => {
           visible={true}
         />
       </div>
-    )
+    );
   }
 
   return (
     <div className={classes.app}>
       {!isShowAddForm && (
         <div className={classes.actions_upper}>
-          <button
+          <Button
             className={classes.button}
-            onClick={() => store.setLanguage(!store.isRussianLng)}
+            onClick={() => store.setLanguage(!store.isFrontLng)}
           >
-            Swap {store.isRussianLng ? '(=> en)' : '(en =>)'}
-          </button>
+            Swap &nbsp;
+            {store.isFrontLng
+              ? `(${currentLanguage} =>)`
+              : `(=> ${currentLanguage})`}
+          </Button>
         </div>
       )}
       {!isShowAddForm && <Card lang={currentLanguage} />}
-      <div className={classes.header}>
-        <div className={classes.actions}>
-          <button
-            className={classes.button}
-            onClick={() => {
-              setIsShowAddForm(!isShowAddForm)
-            }}
-          >
-            {isShowAddForm ? `Hide Form` : `Add New Words`}
-          </button>
-        </div>
+
+      <div className={classes.actions_lower}>
+        <Button
+          className={classes.button}
+          onClick={() => setIsShowAddForm(!isShowAddForm)}
+        >
+          {isShowAddForm ? `Hide Form` : `Add New Word`}
+        </Button>
       </div>
+
       {isShowAddForm && <AddWordForm lng={currentLanguage} />}
     </div>
-  )
-}
+  );
+};
 
-export default observer(EnglishPage)
+export default observer(EnglishPage);

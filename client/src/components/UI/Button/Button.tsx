@@ -1,17 +1,17 @@
-import classNames from 'classnames/bind'
-import React, { DOMAttributes } from 'react'
+import classNames from 'classnames/bind';
+import React, { DOMAttributes } from 'react';
 
-import classes from './Button.module.css'
+import classes from './Button.module.css';
 
-let cx = classNames.bind(classes)
+let cx = classNames.bind(classes);
 
-export type ButtonType = 'button' | 'submit' | 'reset'
+export type ButtonType = 'button' | 'submit' | 'reset';
 
 export interface IButtonProps extends DOMAttributes<HTMLButtonElement> {
-  className?: string
-  isDisabled?: boolean
-  typeButton?: ButtonType
-  onClick?: (e: React.MouseEvent) => void
+  className?: string;
+  isDisabled?: boolean;
+  typeButton?: ButtonType;
+  onClick?: (e: React.MouseEvent) => void;
 }
 
 export const Button: React.FC<IButtonProps> = ({
@@ -32,5 +32,5 @@ export const Button: React.FC<IButtonProps> = ({
     >
       <span>{children}</span>
     </button>
-  )
-}
+  );
+};
