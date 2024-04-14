@@ -4,11 +4,12 @@ import DictionaryService from '../../services/DictionaryService';
 
 import { observer } from 'mobx-react-lite';
 import { useFetchDictionary } from '../../hooks/useFetchDictionary';
+import { TLanguages } from '../../models/TLanguages';
 import { Button } from '../UI';
 import classes from './CardContainer.module.css';
 import WordCard from './WordCard';
 
-const CardContainer = ({ lang }: { lang: string }) => {
+const CardContainer = ({ lang }: { lang: TLanguages }) => {
   const [isFrontSide, setIsFrontSide] = useState(true);
   const [words, setWords] = useState<IWord[]>([]);
   const [word, setWord] = useState<IWord>({} as IWord);

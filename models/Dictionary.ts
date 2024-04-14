@@ -1,7 +1,7 @@
-import { model, Schema } from 'mongoose'
+import { model, Schema } from 'mongoose';
 
 const Dictionary = new Schema({
-  word: { type: String, unique: true, required: true },
+  word: { type: String, required: true },
   translation: { type: String, required: true },
   type: { type: String, default: '' },
   user: { type: String, required: true },
@@ -11,6 +11,6 @@ const Dictionary = new Schema({
   favs: { type: Boolean, default: false },
   lng: { type: String, required: true },
   example: { type: String, default: '' },
-})
+});
 
-export default model('Dictionary', Dictionary)
+export default model('Dictionary', Dictionary);

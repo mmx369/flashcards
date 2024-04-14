@@ -1,3 +1,25 @@
+@keyframes example {
+  0% {
+    color: blue;
+  }
+  50% {
+    color: red;
+  }
+  100% {
+    color: blue;
+  }
+}
+
+.header {
+  margin: auto;
+  max-width: 20rem;
+  padding-bottom: 10px;
+  color: blue;
+  animation-name: example;
+  animation-duration: 4s;
+  animation-iteration-count: 3;
+}
+
 .form_control {
   margin-bottom: 1rem;
 }

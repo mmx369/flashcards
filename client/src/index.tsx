@@ -1,17 +1,17 @@
-import { createContext } from 'react'
-import ReactDOM from 'react-dom/client'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import App from './App'
-import ErrorPage from './components/ErrorPage/ErrorPage'
-import './index.css'
-import EnglishPage from './pages/English'
-import KoreanPage from './pages/Korean'
-import RootLayout from './pages/Root'
-import TurkishPage from './pages/Turkish'
-import Store from './store/store'
+import { createContext } from 'react';
+import ReactDOM from 'react-dom/client';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import App from './App';
+import ErrorPage from './components/ErrorPage/ErrorPage';
+import './index.css';
+import EnglishPage from './pages/English';
+import KoreanPage from './pages/Korean';
+import RootLayout from './pages/Root';
+import TurkishPage from './pages/Turkish';
+import Store from './store/store';
 
 interface State {
-  store: Store
+  store: Store;
 }
 
 const router = createBrowserRouter([
@@ -38,17 +38,19 @@ const router = createBrowserRouter([
       },
     ],
   },
-])
+]);
 
-const store = new Store()
+const store = new Store();
 
 export const Context = createContext<State>({
   store,
-})
+});
 
-const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
+const root = ReactDOM.createRoot(
+  document.getElementById('root') as HTMLElement
+);
 root.render(
   <Context.Provider value={{ store }}>
     <RouterProvider router={router} />
   </Context.Provider>
-)
+);

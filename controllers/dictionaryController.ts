@@ -29,6 +29,7 @@ class DictionaryController {
       );
       res.json(newEntry);
     } catch (error) {
+      console.log('ERROR', error);
       next(error);
     }
   }

@@ -1,3 +1,4 @@
+import ApiError from '../exceptions/api-error';
 import Dictionary from '../models/Dictionary';
 
 class DictionaryService {
@@ -8,14 +9,23 @@ class DictionaryService {
     lng: string,
     example?: string
   ) {
-    const newEntry = await Dictionary.create({
-      word: newWord,
-      translation,
+    const isDocumentExists = await Dictionary.findOne({
       user,
-      lng,
-      example,
-    });
-    return newEntry;
+      word: newWord,
+    }).exec();
+
+    if (!isDocumentExists) {
+      const newEntry = await Dictionary.create({
+        word: newWord,
+        translation,
+        user,
+        lng,
+        example,
+      });
+      return newEntry;
+    } else {
+      throw new ApiError(400, 'Already exists. Try another word.');
+    }
   }
 
   async getWord(lng: string, username: string) {
@@ -35,7 +45,6 @@ class DictionaryService {
 
   async deleteWord(id: string) {
     const word = await Dictionary.findByIdAndDelete(id);
-    console.log(9876, word);
     return word;
   }
 }

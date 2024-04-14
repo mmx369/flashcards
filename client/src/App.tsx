@@ -1,20 +1,20 @@
-import { observer } from 'mobx-react-lite'
-import { useContext, useEffect } from 'react'
-import { Context } from '.'
-import LoginForm from './components/LoginForm/LoginForm'
+import { observer } from 'mobx-react-lite';
+import { useContext, useEffect } from 'react';
+import { Context } from '.';
+import LoginForm from './components/LoginForm/LoginForm';
 
-import { RotatingLines } from 'react-loader-spinner'
-import classes from './App.module.css'
-import { Nav } from './components/Navigation/Nav'
+import { RotatingLines } from 'react-loader-spinner';
+import classes from './App.module.css';
+import { Nav } from './components/Navigation/Nav';
 
 const App = () => {
-  const { store } = useContext(Context)
+  const { store } = useContext(Context);
 
   useEffect(() => {
     if (localStorage.getItem('token')) {
-      store.checkAuth()
+      store.checkAuth();
     }
-  }, [store])
+  }, [store]);
 
   if (store.isLoading) {
     return (
@@ -25,7 +25,7 @@ const App = () => {
         width='96'
         visible={true}
       />
-    )
+    );
   }
 
   if (!store.isAuth) {
@@ -33,7 +33,7 @@ const App = () => {
       <div className='App-header'>
         <LoginForm />
       </div>
-    )
+    );
   }
 
   return (
@@ -42,7 +42,7 @@ const App = () => {
         <Nav />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default observer(App)
+export default observer(App);

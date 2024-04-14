@@ -1,14 +1,14 @@
-import { observer } from 'mobx-react-lite'
-import { FC, useContext } from 'react'
-import { Context } from '../..'
+import { observer } from 'mobx-react-lite';
+import { FC, useContext } from 'react';
+import { Context } from '../..';
 
-import { useInput } from '../../hooks/use-unput'
-import classes from './LoginForm.module.css'
-import { emailValidation, passwordValidation } from './validate'
+import { useInput } from '../../hooks/use-unput';
+import classes from './LoginForm.module.css';
+import { emailValidation, passwordValidation } from './validate';
 
-import { ToastContainer } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
-import { notify } from '../../utils/notify'
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { notify } from '../../utils/notify';
 
 const LoginForm: FC = () => {
   const {
@@ -18,7 +18,7 @@ const LoginForm: FC = () => {
     valueChangeHandler: emailChangeHandler,
     inputBlurHandler: emailBlurHandler,
     reset: resetEmailInput,
-  } = useInput((value) => emailValidation(value))
+  } = useInput((value) => emailValidation(value));
 
   const {
     value: password,
@@ -27,52 +27,57 @@ const LoginForm: FC = () => {
     valueChangeHandler: passwordChangeHandler,
     inputBlurHandler: passwordBlurHandler,
     reset: resetPasswordInput,
-  } = useInput((value: string) => passwordValidation(value))
+  } = useInput((value: string) => passwordValidation(value));
 
-  const { store } = useContext(Context)
+  const { store } = useContext(Context);
 
-  let formIsValid = false
+  let formIsValid = false;
 
   if (enteredEmailIsValid && enteredPasswordIsValid) {
-    formIsValid = true
+    formIsValid = true;
   }
 
   const formSubmissionHandler = (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
     if (!enteredEmailIsValid && !enteredPasswordIsValid) {
-      return
+      return;
     }
     store
       .login(email, password)
       .then((res) => {
-        resetEmailInput()
-        resetPasswordInput()
+        resetEmailInput();
+        resetPasswordInput();
       })
-      .catch((error) => notify(error, 'error'))
-  }
+      .catch((error) => notify(error, 'error'));
+  };
 
   const registrationHandler = () => {
     store
       .registration(email, password)
       .then((res) => {
-        resetEmailInput()
-        resetPasswordInput()
+        resetEmailInput();
+        resetPasswordInput();
       })
       .catch((error) => {
-        notify(error, 'error')
-      })
-  }
+        notify(error, 'error');
+      });
+  };
 
   const emailInputClasses = emailHasError
     ? `${classes.form_control} ${classes.invalid}`
-    : classes.form_control
+    : classes.form_control;
 
   const passwordInputClasses = passwordHasError
     ? `${classes.form_control} ${classes.invalid}`
-    : classes.form_control
+    : classes.form_control;
 
   return (
     <>
+      <div className={classes.header}>
+        <h3>Flashcards App - The best, simple app for studying.</h3>
+        Create your own flashcards. Improve your language learning, memorize
+        study material and prepare for exams with Flashcards App.
+      </div>
       <form onSubmit={formSubmissionHandler}>
         <div className={classes.control_group}>
           <div className={emailInputClasses}>
@@ -129,7 +134,7 @@ const LoginForm: FC = () => {
       </form>
       <ToastContainer />
     </>
-  )
-}
+  );
+};
 
-export default observer(LoginForm)
+export default observer(LoginForm);
