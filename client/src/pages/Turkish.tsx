@@ -1,5 +1,6 @@
 import { observer } from 'mobx-react-lite';
 import { useContext, useState } from 'react';
+import ReactGA from 'react-ga4';
 import { Context } from '..';
 
 import { RotatingLines } from 'react-loader-spinner';
@@ -12,6 +13,7 @@ import { useGetCurrentLanguage } from '../hooks/useGetCurrentLanguage';
 import classes from './Turkish.module.css';
 
 const TurkishPage: React.FC = () => {
+  ReactGA.send({ hitType: 'pageview', page: '/tr', title: 'Turkish' });
   const { store } = useContext(Context);
   const { isLoading } = useCheckAuth();
   const { currentLanguage } = useGetCurrentLanguage();

@@ -1,13 +1,17 @@
 import { observer } from 'mobx-react-lite';
 import { useContext, useEffect } from 'react';
+import ReactGA from 'react-ga4';
 import { Context } from '.';
 import LoginForm from './components/LoginForm/LoginForm';
 
 import { RotatingLines } from 'react-loader-spinner';
 import classes from './App.module.css';
 import { Nav } from './components/Navigation/Nav';
+import { GA_MEASUREMENT_ID } from './constants';
 
 const App = () => {
+  ReactGA.initialize(GA_MEASUREMENT_ID);
+  ReactGA.send({ hitType: 'pageview', page: '/', title: 'Home' });
   const { store } = useContext(Context);
 
   useEffect(() => {

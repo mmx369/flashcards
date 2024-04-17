@@ -2,6 +2,7 @@ import { observer } from 'mobx-react-lite';
 import { useContext, useState } from 'react';
 import { Context } from '..';
 
+import ReactGA from 'react-ga4';
 import { RotatingLines } from 'react-loader-spinner';
 import { AddWordForm } from '../components/AddWordForm/AddWordForm';
 import Card from '../components/Card/CardContainer';
@@ -12,6 +13,7 @@ import { useGetCurrentLanguage } from '../hooks/useGetCurrentLanguage';
 import classes from './Korean.module.css';
 
 const KoreanPage: React.FC = () => {
+  ReactGA.send({ hitType: 'pageview', page: '/kr', title: 'Korean' });
   const { store } = useContext(Context);
   const { isLoading } = useCheckAuth();
   const { currentLanguage } = useGetCurrentLanguage();
