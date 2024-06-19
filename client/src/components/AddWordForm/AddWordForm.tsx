@@ -1,4 +1,4 @@
-import { FormEvent, useContext } from 'react';
+import { FormEvent, useContext, useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 import { Context } from '../..';
 import DictionaryService from '../../services/DictionaryService';
@@ -9,9 +9,11 @@ import { notify } from '../../utils/notify';
 
 import classes from './AddWordForm.module.css';
 import 'react-toastify/dist/ReactToastify.css';
+import Backdrop from '../UI/Backdrop';
 
 export function AddWordForm({ lng }: { lng: TLanguages }) {
   const { store } = useContext(Context);
+  const [isLoaderOpen, setIsLoaderOpen] = useState(false);
 
   const {
     value: newWord,
@@ -49,6 +51,7 @@ export function AddWordForm({ lng }: { lng: TLanguages }) {
     if (!enteredNewWordIsValid && !enteredTranslationIsValid) {
       return;
     }
+    setIsLoaderOpen(true);
     try {
       await DictionaryService.addNewEntry({
         newWord: normilizeString(newWord),
@@ -63,6 +66,8 @@ export function AddWordForm({ lng }: { lng: TLanguages }) {
       resetExampleInput();
     } catch (error) {
       notify(error.response.data.message, 'error');
+    } finally {
+      setIsLoaderOpen(false);
     }
   };
 
@@ -122,6 +127,7 @@ export function AddWordForm({ lng }: { lng: TLanguages }) {
         </div>
       </form>
       <ToastContainer />
+      <Backdrop open={isLoaderOpen} setOpen={setIsLoaderOpen} />
     </div>
   );
 }

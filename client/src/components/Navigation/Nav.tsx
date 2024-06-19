@@ -9,9 +9,9 @@ export function Nav() {
         English
       </Link>
 
-      <Link to={`tr`} className={classes.btn}>
+      {/* <Link to={`tr`} className={classes.btn}>
         Turkish
-      </Link>
+      </Link> */}
 
       <Link to={`kr`} className={classes.btn}>
         Korean
