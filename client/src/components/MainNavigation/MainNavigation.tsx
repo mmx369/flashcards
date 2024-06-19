@@ -1,17 +1,27 @@
-import { observer } from 'mobx-react-lite'
-import { useContext } from 'react'
-import { NavLink } from 'react-router-dom'
-import { Context } from '../..'
-import { Button } from '../UI'
-import classes from './MainNavigation.module.css'
+import { observer } from 'mobx-react-lite';
+import { useContext } from 'react';
+import { NavLink } from 'react-router-dom';
+import { Context } from '../..';
+import { Button } from '../UI';
+import classes from './MainNavigation.module.css';
 
 function MainNavigation() {
-  const { store } = useContext(Context)
+  const { store } = useContext(Context);
 
   return (
     <>
       <header className={classes.header}>
-        <h3>Flashcards App</h3>
+        <NavLink
+          to='/'
+          style={{
+            textDecoration: 'none',
+            color: 'inherit',
+            fontFamily: 'Arial',
+            letterSpacing: '2px',
+          }}
+        >
+          <h3>Flashcards App</h3>
+        </NavLink>
         <div style={{ flexGrow: 1 }}></div>
         <div className={classes.header_title}>
           {store.isAuth ? `Welcome ${store.user.email}!` : null}
@@ -30,7 +40,7 @@ function MainNavigation() {
         )}
       </header>
     </>
-  )
+  );
 }
 
-export default observer(MainNavigation)
+export default observer(MainNavigation);
