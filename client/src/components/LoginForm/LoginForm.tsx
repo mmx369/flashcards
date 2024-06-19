@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite';
-import { FC, useContext } from 'react';
+import { FC, useContext, useState } from 'react';
 import { Context } from '../..';
 
 import { useInput } from '../../hooks/use-unput';
@@ -9,6 +9,7 @@ import { emailValidation, passwordValidation } from './validate';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { notify } from '../../utils/notify';
+import Backdrop from '../UI/Backdrop';
 
 const LoginForm: FC = () => {
   const {
@@ -30,7 +31,7 @@ const LoginForm: FC = () => {
   } = useInput((value: string) => passwordValidation(value));
 
   const { store } = useContext(Context);
-
+  const [isLoaderOpen, setIsLoaderOpen] = useState(false);
   let formIsValid = false;
 
   if (enteredEmailIsValid && enteredPasswordIsValid) {
@@ -42,16 +43,23 @@ const LoginForm: FC = () => {
     if (!enteredEmailIsValid && !enteredPasswordIsValid) {
       return;
     }
+    setIsLoaderOpen(true);
     store
       .login(email, password)
       .then((res) => {
         resetEmailInput();
         resetPasswordInput();
       })
-      .catch((error) => notify(error, 'error'));
+      .catch((error) => {
+        notify(error, 'error');
+      })
+      .finally(() => {
+        setIsLoaderOpen(false);
+      });
   };
 
   const registrationHandler = () => {
+    setIsLoaderOpen(true);
     store
       .registration(email, password)
       .then((res) => {
@@ -60,6 +68,9 @@ const LoginForm: FC = () => {
       })
       .catch((error) => {
         notify(error, 'error');
+      })
+      .finally(() => {
+        setIsLoaderOpen(false);
       });
   };
 
@@ -132,6 +143,7 @@ const LoginForm: FC = () => {
           </div>
         </div>
       </form>
+      <Backdrop open={isLoaderOpen} setOpen={setIsLoaderOpen} />
       <ToastContainer />
     </>
   );
