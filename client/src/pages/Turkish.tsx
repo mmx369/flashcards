@@ -1,18 +1,18 @@
 import { observer } from 'mobx-react-lite';
 import { useContext, useState } from 'react';
+import { RotatingLines } from 'react-loader-spinner';
 import ReactGA from 'react-ga4';
 import { Context } from '..';
-
-import { RotatingLines } from 'react-loader-spinner';
 import { AddWordForm } from '../components/AddWordForm/AddWordForm';
 import Card from '../components/Card/CardContainer';
 import LoginForm from '../components/LoginForm/LoginForm';
 import { Button } from '../components/UI';
 import { useCheckAuth } from '../hooks/useCheckAuth';
 import { useGetCurrentLanguage } from '../hooks/useGetCurrentLanguage';
+
 import classes from './Turkish.module.css';
 
-const TurkishPage: React.FC = () => {
+function TurkishPage() {
   ReactGA.send({ hitType: 'pageview', page: '/tr', title: 'Turkish' });
   const { store } = useContext(Context);
   const { isLoading } = useCheckAuth();
@@ -66,6 +66,6 @@ const TurkishPage: React.FC = () => {
       {isShowAddForm && <AddWordForm lng={currentLanguage} />}
     </div>
   );
-};
+}
 
 export default observer(TurkishPage);

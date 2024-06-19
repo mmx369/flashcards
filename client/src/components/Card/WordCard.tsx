@@ -1,14 +1,15 @@
+import React, { useContext } from 'react';
+import { observer } from 'mobx-react-lite';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import { observer } from 'mobx-react-lite';
-import React, { useContext } from 'react';
 import { Context } from '../..';
-import { ReactComponent as VertMenuSvg } from '../../assets/more_vert.svg';
-import { ReactComponent as VolumeSvg } from '../../assets/volume.svg';
 import { LANGUAGE_MAP } from '../../constants';
 import useSpeech from '../../hooks/useSpeech';
 import { IWord } from '../../models/IWord';
 import { TLanguages } from '../../models/TLanguages';
+import { ReactComponent as VertMenuSvg } from '../../assets/more_vert.svg';
+import { ReactComponent as VolumeSvg } from '../../assets/volume.svg';
+
 import classes from './WordCard.module.css';
 
 type TProps = {
@@ -19,13 +20,13 @@ type TProps = {
   buttonClickHandler: () => void;
 };
 
-const WordCard = ({
+function WordCard({
   isFrontSide,
   lang,
   word,
   speakerWord,
   buttonClickHandler,
-}: TProps) => {
+}: TProps) {
   const { store } = useContext(Context);
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -113,6 +114,6 @@ const WordCard = ({
       </div>
     </div>
   );
-};
+}
 
 export default observer(WordCard);

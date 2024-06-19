@@ -9,7 +9,7 @@ export const getData = async <T>(
       'Content-type': 'application/json',
     },
     body: JSON.stringify({ email, password }),
-  })
+  });
 
-  return await res.json()
-}
+  return await res.json();
+};

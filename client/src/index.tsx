@@ -3,12 +3,13 @@ import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import App from './App';
 import ErrorPage from './components/ErrorPage/ErrorPage';
-import './index.css';
 import EnglishPage from './pages/English';
 import KoreanPage from './pages/Korean';
 import RootLayout from './pages/Root';
 import TurkishPage from './pages/Turkish';
 import Store from './store/store';
+
+import './index.css';
 
 interface State {
   store: Store;

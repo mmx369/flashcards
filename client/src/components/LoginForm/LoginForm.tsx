@@ -1,17 +1,16 @@
-import { observer } from 'mobx-react-lite';
 import { FC, useContext, useState } from 'react';
-import { Context } from '../..';
-
-import { useInput } from '../../hooks/use-unput';
-import classes from './LoginForm.module.css';
-import { emailValidation, passwordValidation } from './validate';
-
+import { observer } from 'mobx-react-lite';
 import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { Context } from '../..';
+import { useInput } from '../../hooks/use-unput';
+import { emailValidation, passwordValidation } from './validate';
 import { notify } from '../../utils/notify';
 import Backdrop from '../UI/Backdrop';
 
-const LoginForm: FC = () => {
+import classes from './LoginForm.module.css';
+import 'react-toastify/dist/ReactToastify.css';
+
+function LoginForm() {
   const {
     value: email,
     isValid: enteredEmailIsValid,
@@ -147,6 +146,6 @@ const LoginForm: FC = () => {
       <ToastContainer />
     </>
   );
-};
+}
 
 export default observer(LoginForm);

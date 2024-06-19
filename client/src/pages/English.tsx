@@ -2,7 +2,6 @@ import { observer } from 'mobx-react-lite';
 import { useContext, useState } from 'react';
 import ReactGA from 'react-ga4';
 import { Context } from '..';
-
 import { RotatingLines } from 'react-loader-spinner';
 import { AddWordForm } from '../components/AddWordForm/AddWordForm';
 import Card from '../components/Card/CardContainer';
@@ -10,9 +9,10 @@ import LoginForm from '../components/LoginForm/LoginForm';
 import { Button } from '../components/UI';
 import { useCheckAuth } from '../hooks/useCheckAuth';
 import { useGetCurrentLanguage } from '../hooks/useGetCurrentLanguage';
+
 import classes from './English.module.css';
 
-const EnglishPage: React.FC = () => {
+function EnglishPage() {
   ReactGA.send({ hitType: 'pageview', page: '/en', title: 'English' });
   const { store } = useContext(Context);
   const { isLoading } = useCheckAuth();
@@ -66,6 +66,6 @@ const EnglishPage: React.FC = () => {
       {isShowAddForm && <AddWordForm lng={currentLanguage} />}
     </div>
   );
-};
+}
 
 export default observer(EnglishPage);

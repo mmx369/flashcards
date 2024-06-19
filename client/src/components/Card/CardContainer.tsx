@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react';
+import { observer } from 'mobx-react-lite';
 import { IWord } from '../../models/IWord';
 import DictionaryService from '../../services/DictionaryService';
-
-import { observer } from 'mobx-react-lite';
 import { useFetchDictionary } from '../../hooks/useFetchDictionary';
 import { TLanguages } from '../../models/TLanguages';
 import { Button } from '../UI';
-import classes from './CardContainer.module.css';
 import WordCard from './WordCard';
 
-const CardContainer = ({ lang }: { lang: TLanguages }) => {
+import classes from './CardContainer.module.css';
+
+function CardContainer({ lang }: { lang: TLanguages }) {
   const [isFrontSide, setIsFrontSide] = useState(true);
   const [words, setWords] = useState<IWord[]>([]);
   const [word, setWord] = useState<IWord>({} as IWord);
@@ -55,7 +55,6 @@ const CardContainer = ({ lang }: { lang: TLanguages }) => {
         console.log(error);
       }
     }
-    console.log(9898, res);
   };
 
   if (error) {
@@ -105,6 +104,6 @@ const CardContainer = ({ lang }: { lang: TLanguages }) => {
       </Button>
     </>
   );
-};
+}
 
 export default observer(CardContainer);
