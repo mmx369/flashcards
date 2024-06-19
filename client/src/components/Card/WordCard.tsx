@@ -1,8 +1,10 @@
-import { useContext } from 'react';
-import { Context } from '../..';
-import { ReactComponent as VolumeSvg } from '../../assets/volume.svg';
-
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 import { observer } from 'mobx-react-lite';
+import React, { useContext } from 'react';
+import { Context } from '../..';
+import { ReactComponent as VertMenuSvg } from '../../assets/more_vert.svg';
+import { ReactComponent as VolumeSvg } from '../../assets/volume.svg';
 import { LANGUAGE_MAP } from '../../constants';
 import useSpeech from '../../hooks/useSpeech';
 import { IWord } from '../../models/IWord';
@@ -26,6 +28,9 @@ const WordCard = ({
 }: TProps) => {
   const { store } = useContext(Context);
 
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+
   const { speak } = useSpeech({
     langCode: LANGUAGE_MAP[lang],
   });
@@ -33,6 +38,14 @@ const WordCard = ({
   const handleSpeech = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
     speak(speakerWord);
+  };
+
+  const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
   };
 
   return (
@@ -79,6 +92,24 @@ const WordCard = ({
             </div>
           </>
         )}
+        <div className={classes.dropdown}>
+          <div className={classes.vert_menu} onClick={handleClick}>
+            <VertMenuSvg />
+          </div>
+          <Menu
+            id='basic-menu'
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            MenuListProps={{
+              'aria-labelledby': 'basic-button',
+            }}
+          >
+            <MenuItem onClick={handleClose}>Profile</MenuItem>
+            <MenuItem onClick={handleClose}>My account</MenuItem>
+            <MenuItem onClick={handleClose}>Logout</MenuItem>
+          </Menu>
+        </div>
       </div>
     </div>
   );

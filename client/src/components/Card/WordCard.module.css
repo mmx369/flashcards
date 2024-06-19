@@ -41,7 +41,19 @@
   opacity: 0.6;
 }
 
+.vert_menu {
+  position: absolute;
+  bottom: 5px;
+  right: 15px;
+  cursor: pointer;
+  opacity: 0.6;
+}
+
 .card_speaker:hover {
+  opacity: 1;
+}
+
+.vert_menu:hover {
   opacity: 1;
 }
 
