@@ -93,7 +93,7 @@ function WordCard({
             </div>
           </>
         )}
-        <div className={classes.dropdown}>
+        {/* <div className={classes.dropdown}>
           <div className={classes.vert_menu} onClick={handleClick}>
             <VertMenuSvg />
           </div>
@@ -110,7 +110,7 @@ function WordCard({
             <MenuItem onClick={handleClose}>My account</MenuItem>
             <MenuItem onClick={handleClose}>Logout</MenuItem>
           </Menu>
-        </div>
+        </div> */}
       </div>
     </div>
   );
