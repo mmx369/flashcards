@@ -1,8 +1,9 @@
-import { observer } from 'mobx-react-lite';
 import { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
+import { observer } from 'mobx-react-lite';
 import { Context } from '../..';
 import { Button } from '../UI';
+
 import classes from './MainNavigation.module.css';
 
 function MainNavigation() {

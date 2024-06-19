@@ -1,5 +1,5 @@
-import classNames from 'classnames/bind';
 import React, { DOMAttributes } from 'react';
+import classNames from 'classnames/bind';
 
 import classes from './Button.module.css';
 
@@ -14,14 +14,14 @@ export interface IButtonProps extends DOMAttributes<HTMLButtonElement> {
   onClick?: (e: React.MouseEvent) => void;
 }
 
-export const Button: React.FC<IButtonProps> = ({
+export function Button({
   className,
   children,
   isDisabled,
   typeButton,
   onClick,
   ...props
-}) => {
+}: IButtonProps) {
   return (
     <button
       className={cx('Button', className, { Button__disabled: isDisabled })}
@@ -33,4 +33,4 @@ export const Button: React.FC<IButtonProps> = ({
       <span>{children}</span>
     </button>
   );
-};
+}

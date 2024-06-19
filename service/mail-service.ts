@@ -1,17 +1,17 @@
-import * as dotenv from 'dotenv'
-dotenv.config()
+import * as dotenv from 'dotenv';
+dotenv.config();
 
-import nodemailer from 'nodemailer'
+import nodemailer from 'nodemailer';
 
 export const API_URL =
   process.env.NODE_ENV?.trim() === 'production'
     ? process.env.API_URL_PROD
-    : process.env.API_URL_DEV
+    : process.env.API_URL_DEV;
 
-console.log(111, API_URL)
-console.log(222, process.env.NODE_ENV)
-console.log(333, process.env.API_URL_PROD)
-console.log(444, process.env.API_URL_DEV)
+console.log(111, API_URL);
+console.log(222, process.env.NODE_ENV);
+console.log(333, process.env.API_URL_PROD);
+console.log(444, process.env.API_URL_DEV);
 
 class MailService {
   constructor() {
@@ -28,7 +28,7 @@ class MailService {
       tls: {
         rejectUnauthorized: false,
       },
-    })
+    });
   }
 
   async sendActivationMail(to: string, link: string) {
@@ -44,8 +44,8 @@ class MailService {
       <a href="${link}">${link}</a>
       </div>
       `,
-    })
+    });
   }
 }
 
-export default new MailService()
+export default new MailService();

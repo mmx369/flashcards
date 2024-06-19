@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router-dom';
+import { observer } from 'mobx-react-lite';
 import MainNavigation from '../components/MainNavigation/MainNavigation';
 
-import { observer } from 'mobx-react-lite';
 import classes from './Root.module.css';
 
 function RootLayout() {

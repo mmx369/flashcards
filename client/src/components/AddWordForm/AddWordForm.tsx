@@ -1,17 +1,16 @@
 import { FormEvent, useContext } from 'react';
+import { ToastContainer } from 'react-toastify';
 import { Context } from '../..';
 import DictionaryService from '../../services/DictionaryService';
-
 import { useInput } from '../../hooks/use-unput';
 import { normilizeString } from '../../utils/normilize-string';
-import classes from './AddWordForm.module.css';
-
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import { TLanguages } from '../../models/TLanguages';
 import { notify } from '../../utils/notify';
 
-export const AddWordForm = ({ lng }: { lng: TLanguages }) => {
+import classes from './AddWordForm.module.css';
+import 'react-toastify/dist/ReactToastify.css';
+
+export function AddWordForm({ lng }: { lng: TLanguages }) {
   const { store } = useContext(Context);
 
   const {
@@ -125,4 +124,4 @@ export const AddWordForm = ({ lng }: { lng: TLanguages }) => {
       <ToastContainer />
     </div>
   );
-};
+}

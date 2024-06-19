@@ -7,7 +7,7 @@ type TProps = {
   setOpen: (b: boolean) => void;
 };
 
-export const SimpleBackdrop: React.FC<TProps> = ({ open, setOpen }) => {
+export function SimpleBackdrop({ open, setOpen }: TProps) {
   return (
     <div>
       <Backdrop
@@ -21,4 +21,4 @@ export const SimpleBackdrop: React.FC<TProps> = ({ open, setOpen }) => {
       </Backdrop>
     </div>
   );
-};
+}

@@ -1,9 +1,8 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
-import classes from './Nav.module.css'
+import classes from './Nav.module.css';
 
-export const Nav: React.FC = () => {
+export function Nav() {
   return (
     <nav className={classes.nav}>
       <Link to={`eng`} className={classes.btn}>
@@ -18,5 +17,5 @@ export const Nav: React.FC = () => {
         Korean
       </Link>
     </nav>
-  )
+  );
 }
