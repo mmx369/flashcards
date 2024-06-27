@@ -58,10 +58,8 @@ class DictionaryController {
         currentLanguage,
         username
       );
-      console.log(9999, words, totalWords);
       const wordsTransformed = transformWordsDataObject(words);
 
-      console.log(888, wordsTransformed);
       res.json({ words: wordsTransformed, totalWords });
     } catch (error) {
       next(error);
