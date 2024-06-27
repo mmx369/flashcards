@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import { IWord } from '../../models/IWord';
 import DictionaryService from '../../services/DictionaryService';
@@ -6,22 +6,27 @@ import { useFetchDictionary } from '../../hooks/useFetchDictionary';
 import { TLanguages } from '../../models/TLanguages';
 import { Button } from '../UI';
 import WordCard from './WordCard';
+import Backdrop from '../UI/Backdrop';
+import { Context } from '../..';
 
 import classes from './CardContainer.module.css';
 
 function CardContainer({ lang }: { lang: TLanguages }) {
+  const { store } = useContext(Context);
   const [isFrontSide, setIsFrontSide] = useState(true);
   const [words, setWords] = useState<IWord[]>([]);
   const [word, setWord] = useState<IWord>({} as IWord);
   const [speaker, setSpeaker] = useState<IWord>({} as IWord);
   const [fetch, setFetch] = useState<boolean>(false);
   const { error, data, loading } = useFetchDictionary(lang, fetch);
+  const [isLoaderOpen, setIsLoaderOpen] = useState(false);
 
   useEffect(() => {
-    setWords(data);
-    setWord(data[0]);
-    setSpeaker(data[0]);
-  }, [data]);
+    store.setTotalWords(data.totalWords);
+    setWords(data.words);
+    setWord(data.words[0]);
+    setSpeaker(data.words[0]);
+  }, [data.words, data.totalWords, store]);
 
   const buttonClickHandler = async () => {
     if (isFrontSide) {
@@ -44,15 +49,19 @@ function CardContainer({ lang }: { lang: TLanguages }) {
   };
 
   const deleteHander = async () => {
+    setIsLoaderOpen(true);
     const res = await DictionaryService.deleteWord(lang, words[0]._id);
     if (res) {
       try {
-        const { data } = await DictionaryService.fetchWord(lang);
-        setWords(data);
-        setWord(data[0]);
-        setSpeaker(data[0]);
+        const { data } = await DictionaryService.fetchWords(lang);
+        store.setTotalWords(data.totalWords);
+        setWords(data.words);
+        setWord(data.words[0]);
+        setSpeaker(data.words[0]);
       } catch (error) {
         console.log(error);
+      } finally {
+        setIsLoaderOpen(false);
       }
     }
   };
@@ -73,7 +82,7 @@ function CardContainer({ lang }: { lang: TLanguages }) {
     );
   }
 
-  if (!loading && data.length === 0) {
+  if (!loading && data.words.length === 0) {
     return (
       <div className={classes.control_group}>
         <div className={classes.card}>Your dictionary is empty.</div>
@@ -102,6 +111,7 @@ function CardContainer({ lang }: { lang: TLanguages }) {
       <Button className={classes.button} onClick={deleteHander}>
         Delete Word
       </Button>
+      <Backdrop open={isLoaderOpen} setOpen={setIsLoaderOpen} />
     </>
   );
 }

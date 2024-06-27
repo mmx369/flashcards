@@ -12,6 +12,7 @@ export default class Store {
   isAuth = false;
   isLoading = false;
   isFrontLng = true;
+  totalWords: number | string = '';
 
   constructor() {
     makeAutoObservable(this);
@@ -31,6 +32,10 @@ export default class Store {
 
   setLanguage(bool: boolean) {
     this.isFrontLng = bool;
+  }
+
+  setTotalWords(count: number) {
+    this.totalWords = count;
   }
 
   async login(email: string, password: string) {

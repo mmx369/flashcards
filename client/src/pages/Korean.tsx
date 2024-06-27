@@ -9,6 +9,7 @@ import LoginForm from '../components/LoginForm/LoginForm';
 import { Button } from '../components/UI';
 import { useCheckAuth } from '../hooks/useCheckAuth';
 import { useGetCurrentLanguage } from '../hooks/useGetCurrentLanguage';
+import InfoSection from '../components/InfoSection/InfoSection';
 
 import classes from './Korean.module.css';
 
@@ -36,7 +37,13 @@ function KoreanPage() {
   }
 
   return (
-    <>
+    <div>
+      {!isShowAddForm && (
+        <div>
+          <InfoSection />
+        </div>
+      )}
+
       {!isShowAddForm && (
         <div className={classes.actions_upper}>
           <Button
@@ -63,7 +70,7 @@ function KoreanPage() {
       </div>
 
       {isShowAddForm && <AddWordForm lng={currentLanguage} />}
-    </>
+    </div>
   );
 }
 

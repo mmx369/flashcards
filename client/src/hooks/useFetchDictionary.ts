@@ -1,11 +1,11 @@
 import { useCallback, useEffect, useState } from 'react';
-import { IWord } from '../models/IWord';
+import { IWord, IWordsResponse } from '../models/IWord';
 import DictionaryService from '../services/DictionaryService';
 
 export type TFetchDictionaryResponse = {
   status: Number;
   statusText: String;
-  data: IWord[];
+  data: IWordsResponse;
   error: any;
   loading: Boolean;
 };
@@ -16,12 +16,15 @@ export const useFetchDictionary = (
 ): TFetchDictionaryResponse => {
   const [status, setStatus] = useState<Number>(0);
   const [statusText, setStatusText] = useState<String>('');
-  const [data, setData] = useState<IWord[]>([]);
+  const [data, setData] = useState<IWordsResponse>({
+    words: [],
+    totalWords: 0,
+  });
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState('');
   const getData = useCallback(async () => {
     try {
-      const apiResponse = await DictionaryService.fetchWord(lang);
+      const apiResponse = await DictionaryService.fetchWords(lang);
       setData(apiResponse.data);
       setStatus(apiResponse.status);
       setStatusText(apiResponse.statusText);

@@ -20,7 +20,7 @@ router.get('/activate/:link', userAuthController.activate);
 router.get('/refresh', userAuthController.refresh);
 router.get('/users', authMiddleware, userAuthController.getUsers);
 
-router.get('/word/:lng', authMiddleware, dictionaryController.getWord);
+router.get('/word/:lng', authMiddleware, dictionaryController.getWords);
 
 router.delete(
   '/word/:lng/:id',
