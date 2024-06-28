@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import { ValidationError, validationResult } from 'express-validator';
 import ApiError from '../exceptions/api-error';
 import dictionaryService from '../service/dictionary-service';
-import { transformWordsDataObject } from './utils/transform';
+import { simplifiedAndTransformData } from './utils/transform';
 
 export type TWords = {
   _id: string;
@@ -58,8 +58,7 @@ class DictionaryController {
         currentLanguage,
         username
       );
-      const wordsTransformed = transformWordsDataObject(words);
-
+      const wordsTransformed = simplifiedAndTransformData(words);
       res.json({ words: wordsTransformed, totalWords });
     } catch (error) {
       next(error);

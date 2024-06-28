@@ -4,8 +4,7 @@ import userAuthController from '../controllers/authController';
 import dictionaryController from '../controllers/dictionaryController';
 import authMiddleware from '../middleware/authMiddleware';
 
-//@ts-ignore
-const router = new Router();
+const router = Router();
 
 router.post(
   '/registration',

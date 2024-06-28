@@ -1,11 +1,15 @@
-import cors from 'cors';
 import dotenv from 'dotenv';
+const envFile =
+  process.env.NODE_ENV === 'production'
+    ? '.env.production'
+    : '.env.development';
+
+dotenv.config({ path: envFile });
+
+import cors from 'cors';
 import express, { Express, Request, Response } from 'express';
 import errorMiddleware from './middleware/errorMiddleware';
 import authRouter from './routers/index';
-
-dotenv.config();
-
 import cookieParser from 'cookie-parser';
 import mongoose from 'mongoose';
 import path from 'path';
@@ -13,12 +17,15 @@ import path from 'path';
 const app: Express = express();
 
 app.use(express.json());
-app.use(
-  cors({
-    credentials: true,
-    origin: process.env.CLIENT_URL,
-  })
-);
+
+if (process.env.NODE_ENV !== 'production') {
+  app.use(
+    cors({
+      credentials: true,
+      origin: process.env.CLIENT_URL,
+    })
+  );
+}
 
 app.use(cookieParser());
 
