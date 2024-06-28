@@ -48,8 +48,6 @@ function CardContainer({ lang }: { lang: TLanguages }) {
     }
   };
 
-  console.log(8787, words);
-
   const deleteHander = async () => {
     setIsLoaderOpen(true);
     const res = await DictionaryService.deleteWord(lang, words[0]._id);

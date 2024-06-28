@@ -1,10 +1,4 @@
-import dotenv from 'dotenv';
-const envFile =
-  process.env.NODE_ENV === 'production'
-    ? '.env.production'
-    : '.env.development';
-
-dotenv.config({ path: envFile });
+require('dotenv').config();
 
 import cors from 'cors';
 import express, { Express, Request, Response } from 'express';
@@ -18,14 +12,12 @@ const app: Express = express();
 
 app.use(express.json());
 
-if (process.env.NODE_ENV !== 'production') {
-  app.use(
-    cors({
-      credentials: true,
-      origin: process.env.CLIENT_URL,
-    })
-  );
-}
+app.use(
+  cors({
+    credentials: true,
+    origin: process.env.CLIENT_URL,
+  })
+);
 
 app.use(cookieParser());
 

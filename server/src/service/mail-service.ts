@@ -8,11 +8,6 @@ export const API_URL =
     ? process.env.API_URL_PROD
     : process.env.API_URL_DEV;
 
-console.log(111, API_URL);
-console.log(222, process.env.NODE_ENV);
-console.log(333, process.env.API_URL_PROD);
-console.log(444, process.env.API_URL_DEV);
-
 class MailService {
   constructor() {
     //@ts-ignore

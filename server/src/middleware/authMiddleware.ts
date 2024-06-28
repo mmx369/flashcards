@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
-import ApiError from '../exceptions/api-error.js';
-import tokenService from '../service/token-service.js';
+import ApiError from '../exceptions/api-error';
+import tokenService from '../service/token-service';
 
 export default function (req: Request, res: Response, next: NextFunction) {
   if (req.method === 'OPTIONS') {

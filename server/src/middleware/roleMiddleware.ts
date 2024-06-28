@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
-import { secret } from '../config.js';
+import { secret } from '../../config.js';
 
 export default function (roles: string[]) {
   return function (req: Request, res: Response, next: NextFunction) {
