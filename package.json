@@ -1,7 +1,7 @@
 {
-  "name": "turkish-learning",
-  "version": "1.0.0",
-  "description": "",
+  "name": "flashcards-app",
+  "version": "2.0.0",
+  "description": "Application for memorize words",
   "main": "index.js",
   "scripts": {
     "build": "npx webpack --config webpack.config.js",
