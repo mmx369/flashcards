@@ -65,6 +65,46 @@ class DictionaryController {
     }
   }
 
+  async getAllWords(
+    req: IGetUserInfoRequest,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> {
+    console.log(2525, req.query.page);
+    const currentLanguage = req.params.lng || 'eng';
+    const username = req.user?.email || '';
+    try {
+      const words = await dictionaryService.getAllWords(
+        currentLanguage,
+        username
+      );
+      res.json(words);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async getWordsPagination(
+    req: IGetUserInfoRequest,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> {
+    const currentLanguage = req.params.lng || 'eng';
+    const username = req.user?.email || '';
+    const page: any = req.query.page;
+    console.log('REQUEST: ', currentLanguage, username, page);
+    try {
+      const words = await dictionaryService.getWordsPagination(
+        currentLanguage,
+        username,
+        page
+      );
+      res.json(words);
+    } catch (error) {
+      next(error);
+    }
+  }
+
   async deleteWord(
     req: IGetUserInfoRequest,
     res: Response,

@@ -21,6 +21,7 @@
     "react-dom": "^18.2.0",
     "react-ga4": "^2.1.0",
     "react-hook-form": "^7.43.9",
+    "react-infinite-scroll-component": "^6.1.0",
     "react-loader-spinner": "^5.3.4",
     "react-router-dom": "^6.11.0",
     "react-scripts": "5.0.1",

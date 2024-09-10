@@ -1,44 +1,21 @@
-import { createContext } from 'react';
+import React, { createContext } from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import App from './App';
-import ErrorPage from './components/ErrorPage/ErrorPage';
-import EnglishPage from './pages/English';
-import KoreanPage from './pages/Korean';
-import RootLayout from './pages/Root';
 import Store from './store/store';
+import RootLayout from './pages/Root';
 
 import './index.css';
+import ErrorPage from './components/ErrorPage/ErrorPage';
+import Korean from './pages/Korean/Korean';
+import App from './App';
+import English from './pages/English/English';
+import WordList from './pages/WordList';
+import KoreanRoot from './pages/Korean';
+import EnglishRoot from './pages/English';
 
 interface State {
   store: Store;
 }
-
-const router = createBrowserRouter([
-  {
-    path: '/',
-    errorElement: <ErrorPage />,
-    element: <RootLayout />,
-    children: [
-      {
-        path: '/',
-        element: <App />,
-      },
-      {
-        path: 'eng',
-        element: <EnglishPage />,
-      },
-      // {
-      //   path: 'tr',
-      //   element: <TurkishPage />,
-      // },
-      {
-        path: 'kr',
-        element: <KoreanPage />,
-      },
-    ],
-  },
-]);
 
 const store = new Store();
 
@@ -46,11 +23,52 @@ export const Context = createContext<State>({
   store,
 });
 
-const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
-);
-root.render(
-  <Context.Provider value={{ store }}>
-    <RouterProvider router={router} />
-  </Context.Provider>
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <RootLayout />,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        index: true,
+        element: <App />,
+      },
+      {
+        path: 'kr',
+        element: <KoreanRoot />,
+        children: [
+          {
+            path: 'cards',
+            element: <Korean />,
+          },
+          {
+            path: 'words',
+            element: <WordList />,
+          },
+        ],
+      },
+      {
+        path: 'eng',
+        element: <EnglishRoot />,
+        children: [
+          {
+            path: 'cards',
+            element: <English />,
+          },
+          {
+            path: 'words',
+            element: <WordList />,
+          },
+        ],
+      },
+    ],
+  },
+]);
+
+ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+  <React.StrictMode>
+    <Context.Provider value={{ store }}>
+      <RouterProvider router={router} />
+    </Context.Provider>
+  </React.StrictMode>
 );
