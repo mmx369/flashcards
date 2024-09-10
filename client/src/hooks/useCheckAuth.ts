@@ -2,7 +2,11 @@ import { useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Context } from '..';
 
-export const useCheckAuth = (): { isLoading: boolean } => {
+interface UseCheckAuthReturn {
+  isLoading: boolean;
+}
+
+export const useCheckAuth = (): UseCheckAuthReturn => {
   const { store } = useContext(Context);
   const navigate = useNavigate();
   useEffect(() => {
@@ -12,9 +16,9 @@ export const useCheckAuth = (): { isLoading: boolean } => {
   }, [store]);
 
   useEffect(() => {
-    if (!store.isAuth) {
+    if (!store.isAuth && !store.isLoading) {
       navigate('/');
     }
-  });
+  }, [store.isAuth, store.isLoading, navigate]);
   return { isLoading: store.isLoading };
 };

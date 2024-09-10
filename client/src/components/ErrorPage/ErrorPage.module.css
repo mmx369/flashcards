@@ -1,0 +1,27 @@
+.container {
+  text-align: center;
+  padding: 20px;
+  color: #333;
+}
+
+.error_h1 {
+  font-size: 2em;
+  margin-bottom: 10px;
+}
+
+.error_p {
+  margin-bottom: 10px;
+}
+
+.error_button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 1em;
+}
+
+.error_button:hover {
+  background-color: #0056b3;
+}

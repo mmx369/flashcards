@@ -5,15 +5,11 @@ import classes from './Nav.module.css';
 export function Nav() {
   return (
     <nav className={classes.nav}>
-      <Link to={`eng`} className={classes.btn}>
+      <Link to={`eng/cards`} className={classes.btn}>
         English
       </Link>
 
-      {/* <Link to={`tr`} className={classes.btn}>
-        Turkish
-      </Link> */}
-
-      <Link to={`kr`} className={classes.btn}>
+      <Link to={`kr/cards`} className={classes.btn}>
         Korean
       </Link>
     </nav>

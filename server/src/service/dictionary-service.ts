@@ -55,6 +55,34 @@ class DictionaryService {
     return { words, totalWords };
   }
 
+  async getAllWords(lng: string, username: string) {
+    const words = await Dictionary.find({ lng, user: username }).sort({
+      counter: 'asc',
+    });
+    return words;
+  }
+
+  async getWordsPagination(lng: string, username: string, page: string) {
+    const LIMIT = 10;
+    const offset = (Number(page) - 1) * LIMIT;
+    const result = await Promise.all([
+      Dictionary.find(
+        { lng, user: username },
+        { word: 1, translation: 1, example: 1 }
+      )
+        .sort({
+          translation: 'asc',
+        })
+        .skip(offset)
+        .limit(LIMIT),
+      Dictionary.find({ lng, user: username }).count(),
+    ]);
+
+    const [words, totalWords] = result;
+
+    return { words, totalWords };
+  }
+
   async deleteWord(id: string) {
     const word = await Dictionary.findByIdAndDelete(id);
     return word;

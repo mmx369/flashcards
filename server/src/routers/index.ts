@@ -20,6 +20,11 @@ router.get('/refresh', userAuthController.refresh);
 router.get('/users', authMiddleware, userAuthController.getUsers);
 
 router.get('/word/:lng', authMiddleware, dictionaryController.getWords);
+router.get(
+  '/words/:lng',
+  authMiddleware,
+  dictionaryController.getWordsPagination
+);
 
 router.delete(
   '/word/:lng/:id',

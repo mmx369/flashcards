@@ -5,3 +5,4 @@ bundle
 .env.production
 .env.development
 client\node_modules
+TODO.txt

@@ -1,15 +1,14 @@
 import { observer } from 'mobx-react-lite';
 import { useContext, useState } from 'react';
 import ReactGA from 'react-ga4';
-import { Context } from '..';
+import { Context } from '../..';
 import { RotatingLines } from 'react-loader-spinner';
-import { AddWordForm } from '../components/AddWordForm/AddWordForm';
-import Card from '../components/Card/CardContainer';
-import LoginForm from '../components/LoginForm/LoginForm';
-import { Button } from '../components/UI';
-import { useCheckAuth } from '../hooks/useCheckAuth';
-import { useGetCurrentLanguage } from '../hooks/useGetCurrentLanguage';
-import InfoSection from '../components/InfoSection/InfoSection';
+import { AddWordForm } from '../../components/AddWordForm/AddWordForm';
+import Card from '../../components/Card/CardContainer';
+import { Button } from '../../components/UI';
+import { useCheckAuth } from '../../hooks/useCheckAuth';
+import { useGetCurrentLanguage } from '../../hooks/useGetCurrentLanguage';
+import InfoSection from '../../components/InfoSection/InfoSection';
 
 import classes from './English.module.css';
 
@@ -19,10 +18,6 @@ function EnglishPage() {
   const { isLoading } = useCheckAuth();
   const { currentLanguage } = useGetCurrentLanguage();
   const [isShowAddForm, setIsShowAddForm] = useState(false);
-
-  if (!store.isAuth) {
-    return <LoginForm />;
-  }
 
   if (isLoading) {
     return (
@@ -45,7 +40,6 @@ function EnglishPage() {
           <InfoSection />
         </div>
       )}
-
       {!isShowAddForm && (
         <div className={classes.actions_upper}>
           <Button
@@ -60,7 +54,6 @@ function EnglishPage() {
         </div>
       )}
       {!isShowAddForm && <Card lang={currentLanguage} />}
-
       <div className={classes.actions_lower}>
         <Button
           className={classes.button}
@@ -69,7 +62,6 @@ function EnglishPage() {
           {isShowAddForm ? `Hide Form` : `Add New Word`}
         </Button>
       </div>
-
       {isShowAddForm && <AddWordForm lng={currentLanguage} />}
     </div>
   );

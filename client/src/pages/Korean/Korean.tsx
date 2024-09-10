@@ -1,17 +1,16 @@
-import { observer } from 'mobx-react-lite';
 import { useContext, useState } from 'react';
 import ReactGA from 'react-ga4';
-import { Context } from '..';
+import { Context } from '../..';
 import { RotatingLines } from 'react-loader-spinner';
-import { AddWordForm } from '../components/AddWordForm/AddWordForm';
-import Card from '../components/Card/CardContainer';
-import LoginForm from '../components/LoginForm/LoginForm';
-import { Button } from '../components/UI';
-import { useCheckAuth } from '../hooks/useCheckAuth';
-import { useGetCurrentLanguage } from '../hooks/useGetCurrentLanguage';
-import InfoSection from '../components/InfoSection/InfoSection';
+import { AddWordForm } from '../../components/AddWordForm/AddWordForm';
+import Card from '../../components/Card/CardContainer';
+import { Button } from '../../components/UI';
+import { useCheckAuth } from '../../hooks/useCheckAuth';
+import { useGetCurrentLanguage } from '../../hooks/useGetCurrentLanguage';
+import InfoSection from '../../components/InfoSection/InfoSection';
 
 import classes from './Korean.module.css';
+import { observer } from 'mobx-react-lite';
 
 function KoreanPage() {
   ReactGA.send({ hitType: 'pageview', page: '/kr', title: 'Korean' });
@@ -20,19 +19,17 @@ function KoreanPage() {
   const { currentLanguage } = useGetCurrentLanguage();
   const [isShowAddForm, setIsShowAddForm] = useState(false);
 
-  if (!store.isAuth) {
-    return <LoginForm />;
-  }
-
   if (isLoading) {
     return (
-      <RotatingLines
-        strokeColor='grey'
-        strokeWidth='5'
-        animationDuration='0.75'
-        width='96'
-        visible={true}
-      />
+      <div>
+        <RotatingLines
+          strokeColor='grey'
+          strokeWidth='5'
+          animationDuration='0.75'
+          width='96'
+          visible={true}
+        />
+      </div>
     );
   }
 
