@@ -30,4 +30,11 @@ export default class DictionaryService {
   static async deleteWord(lang: string, id: string): Promise<AxiosResponse> {
     return $api.delete(`/word/${lang}/${id}`);
   }
+
+  static async fetchSingleWord(
+    lang: string,
+    id: string
+  ): Promise<AxiosResponse> {
+    return $api.get<any>(`/word/${lang}/${id}`);
+  }
 }
