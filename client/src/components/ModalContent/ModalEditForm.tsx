@@ -1,71 +1,114 @@
-import { FormEvent, useContext, useEffect, useState } from 'react';
+import { ChangeEvent, FormEvent, useContext, useEffect, useState } from 'react';
 import { ToastContainer } from 'react-toastify';
-import { Context } from '../..';
 import DictionaryService from '../../services/DictionaryService';
-import { useInput } from '../../hooks/use-unput';
-import { normilizeString } from '../../utils/normilize-string';
 import { TLanguages } from '../../models/TLanguages';
 import { notify } from '../../utils/notify';
 
 import classes from './ModalEditForm.module.css';
 import 'react-toastify/dist/ReactToastify.css';
 import Backdrop from '../UI/Backdrop';
+import { normilizeString } from '../../utils/normilize-string';
+import { Context } from '../..';
 
-export function ModalEditForm({ lng, id }: { lng: TLanguages; id: string }) {
+interface FormData {
+  word: string;
+  translation: string;
+  example: string;
+}
+
+export function ModalEditForm({
+  lng,
+  id,
+  onClose,
+}: {
+  lng: TLanguages;
+  id: string;
+  onClose: () => void;
+}) {
   const { store } = useContext(Context);
   const [isLoaderOpen, setIsLoaderOpen] = useState(false);
+  const [formData, setFormData] = useState<FormData>({
+    word: '',
+    translation: '',
+    example: '',
+  });
 
-  useEffect(() => {}, []);
+  const [errors, setErrors] = useState({
+    word: '',
+    translation: '',
+  });
 
-  const {
-    value: newWord,
-    isValid: enteredNewWordIsValid,
-    hasError: newWordHasError,
-    valueChangeHandler: newWordChangeHandler,
-    inputBlurHandler: newWordlBlurHandler,
-    reset: resetNewWordInput,
-  } = useInput((value: string) => value.trim() !== '');
+  useEffect(() => {
+    async function getCurrentWord(lng: string) {
+      try {
+        const { data } = await DictionaryService.fetchSingleWord(lng, id);
+        setFormData({
+          word: data.word,
+          translation: data.translation,
+          example: data.example,
+        });
+      } catch (error) {
+        notify(error.response.data.message, 'error');
+      }
+    }
+    getCurrentWord(lng);
+  }, [lng, id]);
 
-  const {
-    value: translation,
-    isValid: enteredTranslationIsValid,
-    hasError: translationHasError,
-    valueChangeHandler: translationChangeHandler,
-    inputBlurHandler: translationBlurHandler,
-    reset: resetTranslationInput,
-  } = useInput((value: string) => value.trim() !== '');
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
 
-  const {
-    value: example,
-    valueChangeHandler: exampleChangeHandler,
-    inputBlurHandler: exampleBlurHandler,
-    reset: resetExampleInput,
-  } = useInput((value: string) => true);
+    setErrors({
+      ...errors,
+      [name]: '',
+    });
+  };
 
-  let formIsValid = false;
+  const validateForm = () => {
+    let isValid = true;
+    const newErrors = { word: '', translation: '' };
 
-  if (enteredNewWordIsValid && enteredTranslationIsValid) {
-    formIsValid = true;
-  }
+    if (!formData.word) {
+      newErrors.word = 'Word is required.';
+      isValid = false;
+    }
+    if (!formData.translation) {
+      newErrors.translation = 'Translation is required.';
+      isValid = false;
+    }
 
-  const formSubmitHandler = async (e: FormEvent) => {
+    setErrors(newErrors);
+    return isValid;
+  };
+
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    if (!enteredNewWordIsValid && !enteredTranslationIsValid) {
+    if (!validateForm()) {
       return;
     }
+    console.log(formData);
     setIsLoaderOpen(true);
     try {
-      await DictionaryService.addNewEntry({
-        newWord: normilizeString(newWord),
-        translation: normilizeString(translation),
-        example,
-        user: store.user.email,
-        lng,
-      });
-      notify('Word added succefully!', 'success');
-      resetNewWordInput();
-      resetTranslationInput();
-      resetExampleInput();
+      // You can add your form submission logic here
+      await DictionaryService.editWord(
+        {
+          newWord: normilizeString(formData.word),
+          translation: normilizeString(formData.translation),
+          example: formData.example,
+          user: store.user.email,
+          lng,
+        },
+        id
+      );
+      notify('Word updated succefully!', 'success');
+      setTimeout(() => {
+        onClose();
+      }, 2000);
     } catch (error) {
       notify(error.response.data.message, 'error');
     } finally {
@@ -73,58 +116,45 @@ export function ModalEditForm({ lng, id }: { lng: TLanguages; id: string }) {
     }
   };
 
-  const newWordInputClasses = newWordHasError
-    ? `${classes.form_control} ${classes.invalid}`
-    : classes.form_control;
-
-  const translationInputClasses = translationHasError
-    ? `${classes.form_control} ${classes.invalid}`
-    : classes.form_control;
-
   return (
     <div>
-      <form onSubmit={formSubmitHandler}>
+      <form onSubmit={handleSubmit}>
         <div className={classes.control_group}>
-          <div className={newWordInputClasses}>
+          <div className={classes.form_control}>
+            <label htmlFor='word'>Word:</label>
             <input
               type='text'
-              placeholder='Word'
-              onChange={newWordChangeHandler}
-              onBlur={newWordlBlurHandler}
-              value={newWord}
+              name='word'
+              value={formData.word}
+              onChange={handleChange}
             />
-            {newWordHasError && (
-              <p className={classes.error_text}>Field must not be empty.</p>
-            )}
+            {errors.word && <p className={classes.error_text}>{errors.word}</p>}
           </div>
-          <div className={translationInputClasses}>
+
+          <div className={classes.form_control}>
+            <label htmlFor='translation'>Translation:</label>
             <input
               type='text'
-              placeholder='Translation'
-              onChange={translationChangeHandler}
-              onBlur={translationBlurHandler}
-              value={translation}
+              name='translation'
+              value={formData.translation}
+              onChange={handleChange}
             />
-            {translationHasError && (
-              <p className={classes.error_text}>Field must not be empty.</p>
+            {errors.translation && (
+              <p className={classes.error_text}>{errors.translation}</p>
             )}
-            <div className={classes.form_control}>
-              <textarea
-                rows={3}
-                maxLength={256}
-                placeholder='Examples'
-                onChange={exampleChangeHandler}
-                onBlur={exampleBlurHandler}
-                value={example}
-              />
-            </div>
           </div>
-          <button
-            className={classes.button}
-            type='submit'
-            disabled={!formIsValid}
-          >
-            Add New Word {id}
+
+          <div className={classes.form_control}>
+            <label htmlFor='textarea'>Examples:</label>
+            <textarea
+              name='example'
+              value={formData.example}
+              onChange={handleChange}
+            />
+          </div>
+
+          <button className={classes.button} type='submit'>
+            Save Changes
           </button>
         </div>
       </form>

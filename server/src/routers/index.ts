@@ -21,6 +21,11 @@ router.get('/users', authMiddleware, userAuthController.getUsers);
 
 router.get('/word/:lng', authMiddleware, dictionaryController.getWords);
 router.get(
+  '/single-word/:lng/:id',
+  authMiddleware,
+  dictionaryController.getSingleWord
+);
+router.get(
   '/words/:lng',
   authMiddleware,
   dictionaryController.getWordsPagination
@@ -30,6 +35,16 @@ router.delete(
   '/word/:lng/:id',
   authMiddleware,
   dictionaryController.deleteWord
+);
+
+router.put(
+  '/edit-word/:id',
+  authMiddleware,
+  body('newWord').trim().notEmpty(),
+  body('translation').trim().notEmpty(),
+  body('user').trim().isEmail(),
+  body('lng').trim().notEmpty(),
+  dictionaryController.editEntry
 );
 
 router.post(

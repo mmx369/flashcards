@@ -21,7 +21,11 @@ export function WordCard(props: IWord) {
     <>
       <div>
         <Modal isOpen={isModalOpen} onClose={handleCloseModal} title='My Modal'>
-          <ModalEditForm lng={currentLanguage} id={props._id} />
+          <ModalEditForm
+            lng={currentLanguage}
+            id={props._id}
+            onClose={handleCloseModal}
+          />
           <button onClick={handleCloseModal}>Close Modal</button>
         </Modal>
       </div>

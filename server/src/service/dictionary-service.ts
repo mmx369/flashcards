@@ -29,6 +29,27 @@ class DictionaryService {
     }
   }
 
+  async editEntry(
+    wordId: string,
+    newWord: string,
+    translation: string,
+    user: string,
+    lng: string,
+    example?: string
+  ) {
+    const updatedData = {
+      word: newWord,
+      translation,
+      example,
+    };
+    const updatedEntry = await Dictionary.findByIdAndUpdate(
+      wordId,
+      updatedData,
+      { new: true, runValidators: true }
+    );
+    return updatedEntry;
+  }
+
   async getWords(lng: string, username: string) {
     const result = await Promise.all([
       Dictionary.find(
@@ -81,6 +102,15 @@ class DictionaryService {
     const [words, totalWords] = result;
 
     return { words, totalWords };
+  }
+
+  async getSingleWord(id: string) {
+    const result = await Dictionary.findById(id, {
+      word: 1,
+      translation: 1,
+      example: 1,
+    });
+    return result;
   }
 
   async deleteWord(id: string) {

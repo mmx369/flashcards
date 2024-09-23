@@ -20,6 +20,34 @@ export interface IGetUserInfoRequest extends Request {
 }
 
 class DictionaryController {
+  async editEntry(
+    req: IGetUserInfoRequest,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        const errorArray: ValidationError[] = errors.array();
+        //@ts-ignore
+        return next(ApiError.BadRequest('Validation error', errorArray));
+      }
+      const wordId = req.params.id || '';
+      const { newWord, translation, user, lng, example } = req.body;
+      const updatedEntry = await dictionaryService.editEntry(
+        wordId,
+        newWord,
+        translation,
+        user,
+        lng,
+        example
+      );
+      res.json(updatedEntry);
+    } catch (error) {
+      next(error);
+    }
+  }
+
   async newEntry(
     req: IGetUserInfoRequest,
     res: Response,
@@ -100,6 +128,20 @@ class DictionaryController {
         page
       );
       res.json(words);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async getSingleWord(
+    req: IGetUserInfoRequest,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> {
+    const wordId = req.params.id || '';
+    try {
+      const word = await dictionaryService.getSingleWord(wordId);
+      res.json(word);
     } catch (error) {
       next(error);
     }

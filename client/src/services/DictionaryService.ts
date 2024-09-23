@@ -31,10 +31,17 @@ export default class DictionaryService {
     return $api.delete(`/word/${lang}/${id}`);
   }
 
+  static async editWord(
+    newEntry: IDictionaryEntry,
+    id: string
+  ): Promise<AxiosResponse> {
+    return $api.put(`/edit-word/${id}`, newEntry);
+  }
+
   static async fetchSingleWord(
     lang: string,
     id: string
   ): Promise<AxiosResponse> {
-    return $api.get<any>(`/word/${lang}/${id}`);
+    return $api.get<any>(`/single-word/${lang}/${id}`);
   }
 }
